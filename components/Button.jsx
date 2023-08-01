@@ -1,6 +1,6 @@
 export default function Button({ text, className, variant, type }) {
   let baseStyle =
-    "inline-flex justify-center py-3 px-10 font-semibold transition-all duration-300";
+    "inline-flex justify-center items-center h-[48px] px-10 font-semibold transition-all duration-300";
 
   if (variant === "fill") {
     baseStyle += " bg-black text-white hover:bg-black/90";
