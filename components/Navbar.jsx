@@ -9,7 +9,12 @@ export default function Navbar() {
           Jujurly.
         </a>
 
-        <Button text="Masuk" variant="fill" />
+        <div className="inline-flex items-center gap-4">
+          <span className="inline-flex hidden font-semibold text-black">
+            Fajar Fadillah A
+          </span>
+          <Button text="Masuk" variant="fill" />
+        </div>
       </div>
     </nav>
   );
