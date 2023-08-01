@@ -1,5 +1,8 @@
 import Head from "next/head";
 
+// import components
+import Navbar from "@/components/Navbar";
+
 export default function Home() {
   return (
     <>
@@ -9,7 +12,11 @@ export default function Home() {
         </title>
       </Head>
 
-      <p className="text-center">Homepage voting web application</p>
+      <Navbar />
+
+      <main className="main">
+        <div>main section</div>
+      </main>
     </>
   );
 }
