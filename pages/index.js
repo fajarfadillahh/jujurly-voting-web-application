@@ -9,9 +9,7 @@ export default function Home() {
         </title>
       </Head>
 
-      <p className="text-center text-2xl font-bold text-zinc-900">
-        homepage voting web application
-      </p>
+      <p className="text-center">Homepage voting web application</p>
     </>
   );
 }
