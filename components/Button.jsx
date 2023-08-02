@@ -1,4 +1,4 @@
-export default function Button({ text, className, variant, type }) {
+export default function Button({ text, className, variant, type, onClick }) {
   let baseStyle =
     "inline-flex justify-center items-center h-[48px] px-10 font-semibold transition-all duration-300";
 
@@ -9,16 +9,11 @@ export default function Button({ text, className, variant, type }) {
       " bg-transparent border-2 border-black text-black hover:bg-black hover:text-white";
   }
 
-  // testing button
-  const clicked = () => {
-    alert("clicked");
-  };
-
   return (
     <button
       className={`${baseStyle} ${variant} ${className}`}
       type={type}
-      onClick={clicked}
+      onClick={onClick}
     >
       {text}
     </button>

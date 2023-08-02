@@ -17,8 +17,8 @@ export default function Home() {
       {/* ===== navbar section ===== */}
       <Navbar />
 
-      {/* ===== hero section ===== */}
       <main className="main 2xl:flex 2xl:items-center 2xl:justify-center">
+        {/* ===== hero section ===== */}
         <section className="pb-16 pt-32 2xl:pt-0">
           <div className="container grid justify-items-center gap-8 2xl:min-w-[1024px]">
             <div className="text-center">
