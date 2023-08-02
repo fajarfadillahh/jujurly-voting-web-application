@@ -11,7 +11,8 @@ export default function Button({ text, className, variant, type, onClick }) {
 
   return (
     <button
-      className={`${baseStyle} ${variant} ${className}`}
+      className={`${baseStyle} ${className}`}
+      variant={variant}
       type={type}
       onClick={onClick}
     >
