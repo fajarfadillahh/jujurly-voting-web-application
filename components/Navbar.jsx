@@ -1,7 +1,11 @@
+import { useRouter } from "next/router";
+
 // import components
 import Button from "./Button";
 
 export default function Navbar() {
+  const router = useRouter();
+
   return (
     <nav className="fixed inset-x-0 top-0 z-50 mx-auto max-w-[1440px] bg-white">
       <div className="container flex h-24 items-center justify-between">
@@ -13,7 +17,11 @@ export default function Navbar() {
           <span className="hidden font-semibold text-black">
             Fajar Fadillah A
           </span>
-          <Button text="Masuk" variant="fill" />
+          <Button
+            text="Masuk"
+            variant="fill"
+            onClick={() => router.push("/login")}
+          />
         </div>
       </div>
     </nav>
