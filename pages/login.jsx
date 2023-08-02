@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 
 // import components
@@ -53,9 +54,9 @@ export default function Login() {
 
           <div className="text-[14px] font-medium text-black/60">
             Belum punya akun? Klik{" "}
-            <a href="/register" className="font-bold text-black">
+            <Link href="/register" className="font-bold text-black">
               disini
-            </a>{" "}
+            </Link>{" "}
             untuk daftar
           </div>
         </section>

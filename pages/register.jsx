@@ -1,11 +1,12 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 
 // import components
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 
-export default function registeR() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -63,9 +64,9 @@ export default function registeR() {
 
           <div className="text-[14px] font-medium text-black/60">
             Sudah punya akun? Klik{" "}
-            <a href="/login" className="font-bold text-black">
+            <Link href="/login" className="font-bold text-black">
               disini
-            </a>{" "}
+            </Link>{" "}
             untuk masuk
           </div>
         </section>

@@ -6,12 +6,12 @@ export default function Button({ text, className, variant, type, onClick }) {
     baseStyle += " bg-black text-white hover:bg-black/90";
   } else if (variant === "stroke") {
     baseStyle +=
-      " bg-transparent border-2 border-black text-black hover:bg-black hover:text-white";
+      " bg-transparent border-[3px] border-black text-black hover:bg-black hover:text-white";
   }
 
   return (
     <button
-      className={`${baseStyle} ${className}`}
+      className={`${baseStyle} border ${className}`}
       variant={variant}
       type={type}
       onClick={onClick}

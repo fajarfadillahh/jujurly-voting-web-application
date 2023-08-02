@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 
 // import components
@@ -48,9 +49,9 @@ export default function Participant() {
                 />
               </form>
 
-              <a href="/" className="inline-flex font-semibold text-black">
+              <Link href="/" className="inline-flex font-semibold text-black">
                 Kembali
-              </a>
+              </Link>
             </div>
           </div>
         </section>
