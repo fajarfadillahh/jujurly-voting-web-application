@@ -10,7 +10,7 @@ export default function Navbar() {
         </a>
 
         <div className="inline-flex items-center gap-4">
-          <span className="inline-flex hidden font-semibold text-black">
+          <span className="hidden font-semibold text-black">
             Fajar Fadillah A
           </span>
           <Button text="Masuk" variant="fill" />

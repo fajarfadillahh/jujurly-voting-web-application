@@ -9,15 +9,18 @@ export default function Home() {
     <>
       <Head>
         <title>
-          Welcome to Jujurly - The best web voting application in the world!
+          Selamat datang di Jujurly. - Aplikasi voting berbasis web terbaik di
+          Indonesia!
         </title>
       </Head>
 
+      {/* ===== navbar section ===== */}
       <Navbar />
 
-      <main className="main">
-        <section className="pb-16 pt-32">
-          <div className="container grid justify-items-center gap-8">
+      {/* ===== hero section ===== */}
+      <main className="main 2xl:flex 2xl:items-center 2xl:justify-center">
+        <section className="pb-16 pt-32 2xl:pt-0">
+          <div className="container grid justify-items-center gap-8 2xl:min-w-[1024px]">
             <div className="text-center">
               <h1 className="section-title">Ayo, Mulai Voting Sekarang 🚀</h1>
               <p className="section-text">
@@ -25,7 +28,11 @@ export default function Home() {
               </p>
             </div>
 
-            <img src="/assets/img-1.svg" alt="hero img" className="w-[400px]" />
+            <img
+              src="/assets/img-1.svg"
+              alt="hero img"
+              className="w-[400px] 2xl:w-[500px]"
+            />
 
             <div className="inline-flex items-center gap-6">
               <Button text="Ikut Voting" variant="fill" />
