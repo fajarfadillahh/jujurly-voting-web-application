@@ -1,10 +1,13 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 // import components
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -35,7 +38,11 @@ export default function Home() {
             />
 
             <div className="inline-flex items-center gap-6">
-              <Button text="Ikut Voting" variant="fill" />
+              <Button
+                text="Ikut Voting"
+                variant="fill"
+                onClick={() => router.push("/participant")}
+              />
               <Button text="Buat Voting" variant="stroke" />
             </div>
           </div>
