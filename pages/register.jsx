@@ -5,22 +5,25 @@ import { useState } from "react";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 
-export default function Login() {
+export default function registeR() {
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <>
       <Head>
-        <title>Ayo masuk dulu, biar ketahuan kamu milih siapa.</title>
+        <title>
+          Silakan buat akun terlebih dahulu, sebelum kamu mulai voting.
+        </title>
       </Head>
 
       <main className="main flex items-center justify-center">
         <section className="container grid justify-items-center gap-8">
           <div className="text-center">
-            <h1 className="section-title">Hi, Selamat datang kembali 👏</h1>
+            <h1 className="section-title">Selamat datang di Jujurly 💃</h1>
             <p className="section-text">
-              Ayo masuk dulu, biar ketahuan kamu milih siapa.
+              Silakan buat akun terlebih dahulu, sebelum kamu mulai voting.
             </p>
           </div>
 
@@ -29,6 +32,12 @@ export default function Login() {
               <Form
                 type="email"
                 placeholder="Alamat Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Form
+                type="text"
+                placeholder="Nama Lengkap"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -41,10 +50,11 @@ export default function Login() {
             </form>
 
             <Button
-              text="Masuk"
+              text="Daftar"
               variant="fill"
               className="w-full"
               onClick={() => {
+                console.log("Email:", email);
                 console.log("Name:", name);
                 console.log("Password:", password);
               }}
@@ -52,11 +62,11 @@ export default function Login() {
           </div>
 
           <div className="text-[14px] font-medium text-black/60">
-            Belum punya akun? Klik{" "}
-            <a href="/register" className="font-bold text-black">
+            Sudah punya akun? Klik{" "}
+            <a href="/login" className="font-bold text-black">
               disini
             </a>{" "}
-            untuk daftar
+            untuk masuk
           </div>
         </section>
       </main>

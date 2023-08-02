@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <>
       <Head>
-        <title>Ooppss.. Halaman yang kamnu cari tidak ditemuka.</title>
+        <title>Ooppss.. Halaman yang kamu cari tidak ditemuka.</title>
       </Head>
 
       {/* ===== navbar section ===== */}
