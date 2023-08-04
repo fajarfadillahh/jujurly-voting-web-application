@@ -1,15 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
 import { useRouter } from "next/router";
 
 // import components
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 
 export default function Participant() {
-  const [code, setCode] = useState("");
   const router = useRouter();
 
   return (
@@ -18,10 +16,7 @@ export default function Participant() {
         <title>Ayo Ikutan Voting!</title>
       </Head>
 
-      {/* ===== navbar section ===== */}
-      <Navbar />
-
-      <main className="main">
+      <Layout>
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center">
@@ -41,8 +36,6 @@ export default function Participant() {
                   type="text"
                   placeholder="Masukan Kode Voting"
                   className="text-center uppercase placeholder:capitalize"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
                 />
                 <Button
                   text="Lanjutkan"
@@ -57,7 +50,7 @@ export default function Participant() {
             </div>
           </div>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }

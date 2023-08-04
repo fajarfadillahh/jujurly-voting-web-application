@@ -1,22 +1,19 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
 
 // import components
+import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 
 export default function Login() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
   return (
     <>
       <Head>
         <title>Ayo masuk dulu, biar ketahuan kamu milih siapa.</title>
       </Head>
 
-      <main className="main flex items-center justify-center">
+      <Layout className="flex items-center justify-center">
         <section className="container grid justify-items-center gap-8">
           <div className="text-center">
             <h1 className="section-title">Hi, Selamat datang kembali 👏</h1>
@@ -27,29 +24,11 @@ export default function Login() {
 
           <div className="mx-auto grid min-w-[420px] gap-[30px]">
             <form action="" className="grid gap-2">
-              <Form
-                type="email"
-                placeholder="Alamat Email"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <Form
-                type="password"
-                placeholder="Kata Sandi"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <Form type="email" placeholder="Alamat Email" />
+              <Form type="password" placeholder="Kata Sandi" />
             </form>
 
-            <Button
-              text="Masuk"
-              variant="fill"
-              className="w-full"
-              onClick={() => {
-                console.log("Name:", name);
-                console.log("Password:", password);
-              }}
-            />
+            <Button text="Masuk" variant="fill" className="w-full" />
           </div>
 
           <div className="text-[14px] font-medium text-black/60">
@@ -60,7 +39,7 @@ export default function Login() {
             untuk daftar
           </div>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }

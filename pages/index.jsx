@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 // import components
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 
 export default function Home() {
@@ -17,13 +17,10 @@ export default function Home() {
         </title>
       </Head>
 
-      {/* ===== navbar section ===== */}
-      <Navbar />
-
-      <main className="main 2xl:flex 2xl:items-center 2xl:justify-center">
+      <Layout>
         {/* ===== hero section ===== */}
-        <section className="pb-16 pt-32 2xl:pt-0">
-          <div className="container grid justify-items-center gap-8 2xl:min-w-[1024px]">
+        <section className="pb-16 pt-32">
+          <div className="container grid justify-items-center gap-8">
             <div className="text-center">
               <h1 className="section-title">Ayo, Mulai Voting Sekarang 🚀</h1>
               <p className="section-text">
@@ -31,11 +28,7 @@ export default function Home() {
               </p>
             </div>
 
-            <img
-              src="/assets/img-1.svg"
-              alt="hero img"
-              className="w-[400px] 2xl:w-[500px]"
-            />
+            <img src="/assets/img-1.svg" alt="hero img" className="w-[400px]" />
 
             <div className="inline-flex items-center gap-6">
               <Button
@@ -47,7 +40,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }

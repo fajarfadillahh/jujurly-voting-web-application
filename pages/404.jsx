@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 // import components
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 
 export default function NotFound() {
@@ -14,18 +14,11 @@ export default function NotFound() {
         <title>Ooppss.. Halaman yang kamu cari tidak ditemuka.</title>
       </Head>
 
-      {/* ===== navbar section ===== */}
-      <Navbar />
-
-      <main className="main 2xl:flex 2xl:items-center 2xl:justify-center">
+      <Layout>
         {/* ===== hero section ===== */}
-        <section className="pb-16 pt-32 2xl:pt-0">
-          <div className="container grid justify-items-center gap-8 2xl:min-w-[1024px]">
-            <img
-              src="/assets/img-2.svg"
-              alt="hero img"
-              className="w-[400px] 2xl:w-[500px]"
-            />
+        <section className="pb-16 pt-32">
+          <div className="container grid justify-items-center gap-8">
+            <img src="/assets/img-2.svg" alt="hero img" className="w-[400px]" />
 
             <div className="text-center">
               <h1 className="section-title">Ooppss... Halaman gak ada 😱</h1>
@@ -42,7 +35,7 @@ export default function NotFound() {
             />
           </div>
         </section>
-      </main>
+      </Layout>
     </>
   );
 }
