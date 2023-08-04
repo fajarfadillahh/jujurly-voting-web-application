@@ -54,7 +54,7 @@ export default function Login() {
 
           <div className="text-[14px] font-medium text-black/60">
             Belum punya akun? Klik{" "}
-            <Link href="/register" className="font-bold text-black">
+            <Link href="/auth/register" className="font-bold text-black">
               disini
             </Link>{" "}
             untuk daftar

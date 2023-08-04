@@ -20,7 +20,7 @@ export default function Navbar() {
           <Button
             text="Masuk"
             variant="fill"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/auth/login")}
           />
         </div>
       </div>
