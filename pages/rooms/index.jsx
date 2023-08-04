@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 // import components
 import Navbar from "@/components/Navbar";
@@ -9,6 +10,7 @@ import Button from "@/components/Button";
 
 export default function Participant() {
   const [code, setCode] = useState("");
+  const router = useRouter();
 
   return (
     <>
@@ -34,7 +36,7 @@ export default function Participant() {
                 </p>
               </div>
 
-              <form action="" className="grid min-w-[420px] gap-2">
+              <div className="grid min-w-[420px] gap-2">
                 <Form
                   type="text"
                   placeholder="Masukan Kode Voting"
@@ -45,9 +47,9 @@ export default function Participant() {
                 <Button
                   text="Lanjutkan"
                   variant="fill"
-                  onClick={() => console.log("Kode Voting:", code)}
+                  onClick={() => router.push("/rooms/MJSFLWNS")}
                 />
-              </form>
+              </div>
 
               <Link href="/" className="inline-flex font-semibold text-black">
                 Kembali
