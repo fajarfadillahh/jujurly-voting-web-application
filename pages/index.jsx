@@ -41,7 +41,7 @@ export default function Home() {
               <Button
                 text="Ikut Voting"
                 variant="fill"
-                onClick={() => router.push("/participant")}
+                onClick={() => router.push("/rooms")}
               />
               <Button text="Buat Voting" variant="stroke" />
             </div>
