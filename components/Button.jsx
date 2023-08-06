@@ -1,12 +1,12 @@
 export default function Button({ text, className, variant, type, onClick }) {
   let baseStyle =
-    "inline-flex justify-center items-center h-[48px] px-10 font-semibold transition-all duration-300";
+    "inline-flex justify-center items-center h-[48px] px-10 font-semibold transition";
 
   if (variant === "fill") {
-    baseStyle += " bg-black text-white hover:bg-black/90";
+    baseStyle += " bg-black text-white hover:bg-black/10 hover:text-black";
   } else if (variant === "stroke") {
     baseStyle +=
-      " bg-transparent border-[3px] border-black text-black hover:bg-black hover:text-white";
+      " bg-transparent border-[2px] border-black text-black hover:bg-black hover:text-white";
   }
 
   return (

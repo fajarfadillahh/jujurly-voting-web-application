@@ -34,9 +34,13 @@ export default function Home() {
               <Button
                 text="Ikut Voting"
                 variant="fill"
-                onClick={() => router.push("/rooms")}
+                onClick={() => router.push("/auth/login")}
               />
-              <Button text="Buat Voting" variant="stroke" />
+              <Button
+                text="Buat Voting"
+                variant="stroke"
+                onClick={() => router.push("/auth/login")}
+              />
             </div>
           </div>
         </section>

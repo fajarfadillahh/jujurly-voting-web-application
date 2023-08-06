@@ -21,8 +21,8 @@ export default function CandidateItem() {
         </div>
       </div>
 
-      <div className="inline-flex h-16 w-16 cursor-pointer items-center justify-center bg-black/10 transition-all hover:bg-black/20">
-        <HiCheck className="text-[32px] text-black" />
+      <div className="group inline-flex h-16 w-16 cursor-pointer items-center justify-center bg-black/10 transition hover:bg-black">
+        <HiCheck className="text-[32px] text-black group-hover:text-white" />
       </div>
     </div>
   );

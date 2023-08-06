@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // import components
 import Layout from "@/components/Layout";
@@ -7,6 +8,8 @@ import Form from "@/components/Form";
 import Button from "@/components/Button";
 
 export default function Register() {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -31,7 +34,12 @@ export default function Register() {
               <Form type="password" placeholder="Kata Sandi" />
             </form>
 
-            <Button text="Daftar" variant="fill" className="w-full" />
+            <Button
+              text="Daftar"
+              variant="fill"
+              className="w-full"
+              onClick={() => router.push("/dashboard")}
+            />
           </div>
 
           <div className="text-[14px] font-medium text-black/60">
