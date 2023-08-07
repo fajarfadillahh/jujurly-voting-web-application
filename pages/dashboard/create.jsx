@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import { HiOutlinePlus } from "react-icons/hi";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
 registerLocale("id", id);
@@ -11,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
+import CandidateForm from "@/components/Candidate/CandidateForm";
 
 export default function CreateVoting() {
   const [startDate, setStartDate] = useState(null);
@@ -53,7 +55,7 @@ export default function CreateVoting() {
                 <div className="flex items-center justify-between">
                   <div className="grid gap-2">
                     <label className="font-semibold text-black">
-                      Waktu mulai
+                      Waktu Mulai
                     </label>
                     <ReactDatePicker
                       dateFormat="d MMMM yyyy, HH:mm"
@@ -65,7 +67,7 @@ export default function CreateVoting() {
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
-                      placeholderText="Pilih waktu kapan dimulai"
+                      placeholderText="Pilih Waktu Mulai"
                     />
                   </div>
                   <span className="pt-[24px] font-semibold text-black">
@@ -73,11 +75,11 @@ export default function CreateVoting() {
                   </span>
                   <div className="grid gap-2">
                     <label className="font-semibold text-black">
-                      Waktu selesai
+                      Waktu Selesai
                     </label>
                     <ReactDatePicker
                       dateFormat="dd MMMM yyyy, HH:mm"
-                      minDate={new Date()}
+                      minDate={startDate}
                       locale={"id"}
                       showTimeSelect
                       timeFormat="HH:mm"
@@ -85,7 +87,7 @@ export default function CreateVoting() {
                       selected={endDate}
                       onChange={(date) => setEndDate(date)}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
-                      placeholderText="Pilih waktu kapan selesai"
+                      placeholderText="Pilih Waktu Selesai"
                     />
                   </div>
                 </div>
@@ -95,7 +97,14 @@ export default function CreateVoting() {
             <div className="grid gap-6">
               <h1 className="text-[24px] font-bold text-black">Kandidat</h1>
 
-              <div>kandidat form</div>
+              <div className="flex flex-wrap gap-5">
+                <CandidateForm />
+                <CandidateForm />
+
+                <div className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20">
+                  <HiOutlinePlus />
+                </div>
+              </div>
             </div>
 
             <div className="justify-self-end">
