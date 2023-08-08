@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
-import Flatpickr from "react-flatpickr";
+import ReactDatePicker, { registerLocale } from "react-datepicker";
+import id from "date-fns/locale/id";
+registerLocale("id", id);
 
-// reactflatpicr css
-import "flatpickr/dist/flatpickr.css";
+// reactdatepicker css
+import "react-datepicker/dist/react-datepicker.css";
 
 // import components
 import Layout from "@/components/Layout";
@@ -55,18 +57,17 @@ export default function CreateVoting() {
                     <label className="font-semibold text-black">
                       Waktu Mulai
                     </label>
-
-                    <Flatpickr
-                      data-enable-time
-                      options={{ time_24hr: true, minDate: Date.now() }}
-                      onClose={(date) => {
-                        if (date.length == 0) {
-                          return alert("silahkan pilih waktu mulai");
-                        }
-                        setStartDate(date[0].getTime());
-                      }}
+                    <ReactDatePicker
+                      dateFormat="d MMMM yyyy, HH:mm"
+                      minDate={new Date()}
+                      locale={"id"}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={30}
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
-                      placeholder="Pilih Waktu Mulai"
+                      placeholderText="Pilih Waktu Mulai"
                     />
                   </div>
                   <span className="pt-[24px] font-semibold text-black">
@@ -76,18 +77,17 @@ export default function CreateVoting() {
                     <label className="font-semibold text-black">
                       Waktu Selesai
                     </label>
-
-                    <Flatpickr
-                      data-enable-time
-                      options={{ time_24hr: true, minDate: startDate }}
-                      onClose={(date) => {
-                        if (date.length == 0) {
-                          return alert("silahkan pilih waktu selesai");
-                        }
-                        setEndDate(date[0].getTime());
-                      }}
+                    <ReactDatePicker
+                      dateFormat="dd MMMM yyyy, HH:mm"
+                      minDate={startDate}
+                      locale={"id"}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={30}
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
-                      placeholder="Pilih Waktu Selesai"
+                      placeholderText="Pilih Waktu Selesai"
                     />
                   </div>
                 </div>
