@@ -6,10 +6,15 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
+import { useState } from "react";
 
 export default function Participant() {
+  const [code, setCode] = useState("");
   const router = useRouter();
 
+  function handleCode(e) {
+    setCode(e.target.value);
+  }
   return (
     <>
       <Head>
@@ -36,11 +41,13 @@ export default function Participant() {
                   type="text"
                   placeholder="Masukan Kode Voting"
                   className="text-center uppercase placeholder:capitalize"
+                  onChange={handleCode}
+                  value={code}
                 />
                 <Button
                   text="Lanjutkan"
                   variant="fill"
-                  onClick={() => router.push("/rooms/MJSFLWNS")}
+                  onClick={() => router.push(`/rooms/${code}`)}
                 />
               </div>
 
