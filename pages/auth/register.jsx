@@ -1,6 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
+import axios from "axios";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 
 // import components
 import Layout from "@/components/Layout";
@@ -9,6 +12,38 @@ import Button from "@/components/Button";
 
 export default function Register() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [password, setPassword] = useState("");
+  const [cookie, setCookie] = useCookies();
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleFullname = (e) => {
+    setFullname(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  async function handleRegister() {
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/register`,
+      { email, fullname, password },
+    );
+
+    if (data.success) {
+      setCookie("token", data.data.token, { path: "/" });
+      return router.push("/dashboard");
+    }
+
+    data.error.map((error) => {
+      return error.message;
+    });
+  }
 
   return (
     <>
@@ -29,16 +64,31 @@ export default function Register() {
 
           <div className="mx-auto grid min-w-[420px] gap-[30px]">
             <form action="" className="grid gap-2">
-              <Form type="email" placeholder="Alamat Email" />
-              <Form type="text" placeholder="Nama Lengkap" />
-              <Form type="password" placeholder="Kata Sandi" />
+              <Form
+                type="email"
+                placeholder="Alamat Email"
+                value={email}
+                onChange={handleEmail}
+              />
+              <Form
+                type="text"
+                placeholder="Nama Lengkap"
+                value={fullname}
+                onChange={handleFullname}
+              />
+              <Form
+                type="password"
+                placeholder="Kata Sandi"
+                value={password}
+                onChange={handlePassword}
+              />
             </form>
 
             <Button
               text="Daftar"
               variant="fill"
               className="w-full"
-              onClick={() => router.push("/dashboard")}
+              onClick={handleRegister}
             />
           </div>
 

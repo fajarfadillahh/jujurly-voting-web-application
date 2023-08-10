@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 // import components
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
-import { useState } from "react";
 
 export default function Participant() {
   const [code, setCode] = useState("");
@@ -51,7 +51,10 @@ export default function Participant() {
                 />
               </div>
 
-              <Link href="/" className="inline-flex font-semibold text-black">
+              <Link
+                href="/dashboard"
+                className="inline-flex font-semibold text-black"
+              >
                 Kembali
               </Link>
             </div>

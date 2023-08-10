@@ -1,7 +1,7 @@
 import Head from "next/head";
+import Flatpickr from "react-flatpickr";
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
-import Flatpickr from "react-flatpickr";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -98,7 +98,6 @@ export default function CreateVoting() {
               <h1 className="text-[24px] font-bold text-black">Kandidat</h1>
 
               <div className="flex flex-wrap gap-5">
-                <CandidateForm />
                 <CandidateForm />
 
                 <div className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20">

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 
@@ -27,10 +27,7 @@ export default function Login() {
   async function handleLogin() {
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/login`,
-      {
-        email,
-        password,
-      },
+      { email, password },
     );
 
     if (data.success) {
