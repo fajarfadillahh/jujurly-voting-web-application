@@ -7,7 +7,7 @@ import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 
-export default function Admin() {
+export default function Admin({ rooms }) {
   const router = useRouter();
 
   return (
@@ -70,45 +70,74 @@ export default function Admin() {
                 </tr>
               </thead>
 
-              <tbody>
-                <tr>
-                  <td className="p-5 text-left font-semibold text-black">1.</td>
-                  <td className="p-5 text-left font-semibold text-black">
-                    Pemilihan Ketua Osis
-                  </td>
-                  <td className="p-5 text-left font-medium uppercase text-black">
-                    JAHTHFKS
-                  </td>
-                  <td className="p-5 text-left font-semibold text-black">
-                    12/05/2023 <br />
-                    10:00
-                  </td>
-                  <td className="p-5 text-left font-semibold text-black">
-                    13/05/2023 <br />
-                    18:00
-                  </td>
-                  <td className="p-5 text-left font-semibold text-black">
-                    <div className="flex items-center justify-center gap-3">
-                      <Link
-                        href="#"
-                        className="p-1 text-[22px] text-black hover:bg-black/10"
-                      >
-                        <HiOutlinePencilAlt />
-                      </Link>
-                      <Link
-                        href="#"
-                        className="p-1 text-[22px] text-black hover:bg-black/10"
-                      >
-                        <HiOutlineTrash />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              {rooms.data.map((room, index) => {
+                return (
+                  <tbody key={room.id}>
+                    <tr>
+                      <td className="p-5 text-left font-semibold text-black">
+                        {index + 1}.
+                      </td>
+                      <td className="p-5 text-left">
+                        <a
+                          href={`http://localhost:3000/rooms/${room.code}`}
+                          className="font-semibold text-black hover:underline"
+                          target="_blank"
+                        >
+                          {room.name}
+                        </a>
+                      </td>
+                      <td className="p-5 text-left font-medium uppercase text-black">
+                        {room.code}
+                      </td>
+                      <td className="p-5 text-left font-semibold text-black">
+                        {room.start}
+                      </td>
+                      <td className="p-5 text-left font-semibold text-black">
+                        {room.end}
+                      </td>
+                      <td className="p-5 text-left font-semibold text-black">
+                        <div className="flex items-center justify-center gap-3">
+                          <Link
+                            href="#"
+                            className="p-1 text-[22px] text-black hover:bg-black/10"
+                          >
+                            <HiOutlinePencilAlt />
+                          </Link>
+                          <Link
+                            href="#"
+                            className="p-1 text-[22px] text-black hover:bg-black/10"
+                          >
+                            <HiOutlineTrash />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
             </table>
           </div>
         </section>
       </Layout>
     </>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const token = req.cookies.token;
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/rooms`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return {
+    props: {
+      rooms: await response.json(),
+    },
+  };
 }
