@@ -3,27 +3,100 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import axios from "axios";
+import useSWR from "swr";
+import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import { convertTime } from "@/utils/convert";
 
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 
-export default function Admin({ rooms }) {
+export default function Admin(props) {
   const router = useRouter();
+  const [cookies, setCookies] = useCookies();
+  const token = cookies.token;
 
-  function convertTime(time) {
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDay();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+  const {
+    data: rooms,
+    mutate,
+    isLoading,
+  } = useSWR("rooms", fetcher, {
+    revalidateOnFocus: false,
+    fallback: props.rooms,
+  });
 
-    return `${day < 10 ? `0${day}` : day}/${
-      month < 10 ? `0${month}` : month
-    }/${year} ${hours < 10 ? `0${hours}` : hours}:${
-      minutes < 10 ? `0${minutes}` : minutes
-    }`;
+  async function fetcher(url) {
+    try {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/${url}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  function handleDelete(room_id, code) {
+    Swal.fire({
+      title: "Yakin nih mau hapus room?😀",
+      text: "Bakalan ke hapus beneran loh..",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Hapus aja",
+      cancelButtonText: "Ga jadi",
+      cancelButtonColor: "#d33",
+      confirmButtonColor: "#3085d6",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axios.delete(
+            `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              data: {
+                room_id: room_id,
+                code,
+              },
+            },
+          );
+
+          if (data.success) {
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              text: "Hapus data nya berhasil 😄",
+              timer: 1500,
+              icon: "success",
+              timerProgressBar: true,
+            });
+
+            // do refetch
+            mutate();
+          }
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            title: "Ups",
+            text: error.message,
+            icon: "error",
+          });
+        }
+      }
+    });
+  }
+
+  if (isLoading) {
+    return;
   }
 
   return (
@@ -127,12 +200,12 @@ export default function Admin({ rooms }) {
                             >
                               <HiOutlinePencilAlt />
                             </Link>
-                            <Link
-                              href="#"
+                            <button
                               className="p-1 text-[22px] text-black hover:bg-black/10"
+                              onClick={() => handleDelete(room.id, room.code)}
                             >
                               <HiOutlineTrash />
-                            </Link>
+                            </button>
                           </div>
                         </td>
                       </tr>
