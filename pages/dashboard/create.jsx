@@ -15,6 +15,34 @@ import CandidateForm from "@/components/Candidate/CandidateForm";
 export default function CreateVoting() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [candidates, setCandidates] = useState([]);
+
+  const submitCandidate = (candidate) => {
+    setCandidates(
+      candidates.map((e) => (e.key === candidate.key ? candidate : e)),
+    );
+  };
+
+  const addCandidateForm = () => {
+    const newCandidate = {
+      name: "",
+      key: candidates.length + 1,
+    };
+
+    setCandidates([...candidates, newCandidate]);
+  };
+
+  const removeCandidateForm = (key) => {
+    const newCandidate = candidates.filter(
+      (candidate) => candidate.key !== key,
+    );
+
+    newCandidate.forEach((candidate, index) => {
+      candidate.key = index + 1;
+    });
+
+    setCandidates(newCandidate);
+  };
 
   return (
     <>
@@ -98,9 +126,19 @@ export default function CreateVoting() {
               <h1 className="text-[24px] font-bold text-black">Kandidat</h1>
 
               <div className="flex flex-wrap gap-5">
-                <CandidateForm />
+                {candidates.map((candidate, index) => (
+                  <CandidateForm
+                    key={index}
+                    candidate={candidate}
+                    submitCandidate={submitCandidate}
+                    removeCandidateForm={removeCandidateForm}
+                  />
+                ))}
 
-                <div className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20">
+                <div
+                  className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20"
+                  onClick={() => addCandidateForm()}
+                >
                   <HiOutlinePlus />
                 </div>
               </div>
