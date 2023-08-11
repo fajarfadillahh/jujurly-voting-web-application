@@ -10,6 +10,21 @@ import Button from "@/components/Button";
 export default function Admin({ rooms }) {
   const router = useRouter();
 
+  function convertTime(time) {
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDay();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    return `${day < 10 ? `0${day}` : day}/${
+      month < 10 ? `0${month}` : month
+    }/${year} ${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
+  }
+
   return (
     <>
       <Head>
@@ -90,10 +105,10 @@ export default function Admin({ rooms }) {
                         {room.code}
                       </td>
                       <td className="p-5 text-left font-semibold text-black">
-                        {room.start}
+                        {convertTime(room.start)}
                       </td>
                       <td className="p-5 text-left font-semibold text-black">
-                        {room.end}
+                        {convertTime(room.end)}
                       </td>
                       <td className="p-5 text-left font-semibold text-black">
                         <div className="flex items-center justify-center gap-3">
