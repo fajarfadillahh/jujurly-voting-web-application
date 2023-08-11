@@ -25,19 +25,21 @@ export default function Login() {
   }
 
   async function handleLogin() {
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/login`,
-      { email, password },
-    );
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
+        { email, password },
+      );
 
-    if (data.success) {
-      setCookie("token", data.data.token, { path: "/" });
-      return router.push("/dashboard");
+      if (data.success) {
+        setCookie("token", data.data.token, { path: "/" });
+        return router.push("/dashboard");
+      }
+    } catch (error) {
+      error.response.data.errors.map((error) => {
+        alert(error.message);
+      });
     }
-
-    data.errors.map((error) => {
-      alert(error.message);
-    });
   }
 
   return (

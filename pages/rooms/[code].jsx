@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 // import components
 import Layout from "@/components/Layout";
@@ -59,26 +60,26 @@ export default function Voting({ rooms }) {
 export async function getServerSideProps({ params, req }) {
   const token = req.cookies.token;
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/rooms?code=${params.code}`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms?code=${params.code}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    },
-  );
+    );
 
-  if (response.status == 400 || response.status == 404) {
+    return {
+      props: {
+        rooms: data,
+      },
+    };
+  } catch (error) {
     return {
       redirect: {
-        destination: "/404",
+        destination: `/404?code=${error.response.status}`,
       },
     };
   }
-
-  return {
-    props: {
-      rooms: await response.json(),
-    },
-  };
 }

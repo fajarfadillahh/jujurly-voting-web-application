@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
+import axios from "axios";
 
 // import components
 import Layout from "@/components/Layout";
@@ -93,13 +94,12 @@ export default function Admin({ rooms }) {
                         {index + 1}.
                       </td>
                       <td className="p-5 text-left">
-                        <a
-                          href={`http://localhost:3000/rooms/${room.code}`}
+                        <Link
+                          href={`/rooms/${room.code}`}
                           className="font-semibold text-black hover:underline"
-                          target="_blank"
                         >
                           {room.name}
-                        </a>
+                        </Link>
                       </td>
                       <td className="p-5 text-left font-medium uppercase text-black">
                         {room.code}
@@ -141,18 +141,26 @@ export default function Admin({ rooms }) {
 export async function getServerSideProps({ req }) {
   const token = req.cookies.token;
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/rooms`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    },
-  );
+    );
 
-  return {
-    props: {
-      rooms: await response.json(),
-    },
-  };
+    return {
+      props: {
+        rooms: data,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: `/404?code=${error.response.status}`,
+      },
+    };
+  }
 }

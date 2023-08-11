@@ -30,19 +30,21 @@ export default function Register() {
   };
 
   async function handleRegister() {
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/register`,
-      { email, fullname, password },
-    );
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
+        { email, fullname, password },
+      );
 
-    if (data.success) {
-      setCookie("token", data.data.token, { path: "/" });
-      return router.push("/dashboard");
+      if (data.success) {
+        setCookie("token", data.data.token, { path: "/" });
+        return router.push("/dashboard");
+      }
+    } catch (error) {
+      error.response.data.errors.map((error) => {
+        alert(error.message);
+      });
     }
-
-    data.error.map((error) => {
-      return error.message;
-    });
   }
 
   return (
