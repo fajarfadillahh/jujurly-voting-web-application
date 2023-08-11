@@ -37,7 +37,10 @@ export default function Register() {
       );
 
       if (data.success) {
-        setCookie("token", data.data.token, { path: "/" });
+        setCookie("token", data.data.token, {
+          path: "/",
+          expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+        });
         return router.push("/dashboard");
       }
     } catch (error) {

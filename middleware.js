@@ -19,7 +19,12 @@ export default async function middleware(request) {
 
       const response = NextResponse.next();
 
-      response.cookies.set("fullname", verify.payload.fullname);
+      response.cookies.set({
+        name: "fullname",
+        value: verify.payload.fullname,
+        expires: verify.payload.exp * 1000,
+        path: "/",
+      });
       return response;
     } catch (error) {
       return NextResponse.redirect(new URL("/auth/login", request.url));
@@ -43,7 +48,12 @@ export default async function middleware(request) {
 
       const response = NextResponse.next();
 
-      response.cookies.set("fullname", verify.payload.fullname);
+      response.cookies.set({
+        name: "fullname",
+        value: verify.payload.fullname,
+        expires: verify.payload.exp * 1000,
+        path: "/",
+      });
       return response;
     } catch (error) {
       return NextResponse.redirect(new URL("/auth/login", request.url));
