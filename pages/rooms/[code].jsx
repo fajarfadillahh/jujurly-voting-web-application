@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 // import components
 import Layout from "@/components/Layout";

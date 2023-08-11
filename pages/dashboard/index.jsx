@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
-import axios from "axios";
 
 // import components
 import Layout from "@/components/Layout";
