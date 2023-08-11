@@ -85,51 +85,61 @@ export default function Admin({ rooms }) {
                   <th></th>
                 </tr>
               </thead>
-
-              {rooms.data.map((room, index) => {
-                return (
-                  <tbody key={room.id}>
-                    <tr>
-                      <td className="p-5 text-left font-semibold text-black">
-                        {index + 1}.
-                      </td>
-                      <td className="p-5 text-left">
-                        <Link
-                          href={`/rooms/${room.code}`}
-                          className="font-semibold text-black hover:underline"
-                        >
-                          {room.name}
-                        </Link>
-                      </td>
-                      <td className="p-5 text-left font-medium uppercase text-black">
-                        {room.code}
-                      </td>
-                      <td className="p-5 text-left font-semibold text-black">
-                        {convertTime(room.start)}
-                      </td>
-                      <td className="p-5 text-left font-semibold text-black">
-                        {convertTime(room.end)}
-                      </td>
-                      <td className="p-5 text-left font-semibold text-black">
-                        <div className="flex items-center justify-center gap-3">
+              <tbody>
+                {rooms.data.length == 0 ? (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="p-5 text-center font-semibold text-black"
+                    >
+                      Waduh belum ada datanya nih 😀
+                    </td>
+                  </tr>
+                ) : (
+                  rooms.data.map((room, index) => {
+                    return (
+                      <tr key={room.id}>
+                        <td className="p-5 text-left font-semibold text-black">
+                          {index + 1}.
+                        </td>
+                        <td className="p-5 text-left">
                           <Link
-                            href="#"
-                            className="p-1 text-[22px] text-black hover:bg-black/10"
+                            href={`/rooms/${room.code}`}
+                            className="font-semibold text-black hover:underline"
                           >
-                            <HiOutlinePencilAlt />
+                            {room.name}
                           </Link>
-                          <Link
-                            href="#"
-                            className="p-1 text-[22px] text-black hover:bg-black/10"
-                          >
-                            <HiOutlineTrash />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
+                        </td>
+                        <td className="p-5 text-left font-medium uppercase text-black">
+                          {room.code}
+                        </td>
+                        <td className="p-5 text-left font-semibold text-black">
+                          {convertTime(room.start)}
+                        </td>
+                        <td className="p-5 text-left font-semibold text-black">
+                          {convertTime(room.end)}
+                        </td>
+                        <td className="p-5 text-left font-semibold text-black">
+                          <div className="flex items-center justify-center gap-3">
+                            <Link
+                              href="#"
+                              className="p-1 text-[22px] text-black hover:bg-black/10"
+                            >
+                              <HiOutlinePencilAlt />
+                            </Link>
+                            <Link
+                              href="#"
+                              className="p-1 text-[22px] text-black hover:bg-black/10"
+                            >
+                              <HiOutlineTrash />
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
             </table>
           </div>
         </section>
