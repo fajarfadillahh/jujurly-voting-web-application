@@ -30,7 +30,9 @@ export default function Voting({ rooms }) {
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center gap-8">
             <div className="text-center">
-              <h1 className="section-title">{rooms.data.name}</h1>
+              <h1 className="section-title mx-auto w-[820px]">
+                {rooms.data.name}
+              </h1>
 
               {/* countdown components */}
               <CountDown end={rooms.data.end} />
