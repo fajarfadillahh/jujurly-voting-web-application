@@ -1,5 +1,6 @@
 import Head from "next/head";
 import axios from "axios";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 // import components
@@ -49,7 +50,16 @@ export default function Voting({ rooms }) {
               })}
             </div>
 
-            <Button text="Kirim Voting 🚀" variant="fill" className="mt-8" />
+            <div className="grid justify-items-center gap-4">
+              <Button text="Kirim Voting 🚀" variant="fill" className="mt-8" />
+
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 font-semibold text-black hover:underline"
+              >
+                Kembali
+              </Link>
+            </div>
           </div>
         </section>
       </Layout>

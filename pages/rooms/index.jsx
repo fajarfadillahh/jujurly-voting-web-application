@@ -53,7 +53,7 @@ export default function Participant() {
 
               <Link
                 href="/dashboard"
-                className="inline-flex font-semibold text-black"
+                className="inline-flex font-semibold text-black hover:underline"
               >
                 Kembali
               </Link>

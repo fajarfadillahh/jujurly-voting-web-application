@@ -54,7 +54,7 @@ export default function CreateVoting() {
   const handleCreateVoting = async () => {
     try {
       const { data } = await axios.post(
-        "https://jujurly.cyclic.app/api/v1/rooms",
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
         {
           name: title,
           start: startDate,
