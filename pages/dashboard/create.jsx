@@ -17,12 +17,6 @@ export default function CreateVoting() {
   const [endDate, setEndDate] = useState(null);
   const [candidates, setCandidates] = useState([]);
 
-  const submitCandidate = (candidate) => {
-    setCandidates(
-      candidates.map((e) => (e.key === candidate.key ? candidate : e)),
-    );
-  };
-
   const addCandidateForm = () => {
     const newCandidate = {
       name: "",
@@ -130,7 +124,6 @@ export default function CreateVoting() {
                   <CandidateForm
                     key={index}
                     candidate={candidate}
-                    submitCandidate={submitCandidate}
                     removeCandidateForm={removeCandidateForm}
                   />
                 ))}
