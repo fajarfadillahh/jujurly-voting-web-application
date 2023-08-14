@@ -1,7 +1,10 @@
 import Head from "next/head";
 import Flatpickr from "react-flatpickr";
+import axios from "axios";
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -13,8 +16,13 @@ import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
 
 export default function CreateVoting() {
+  const [cookie, setCookie] = useCookies();
+  const token = cookie.token;
+  const router = useRouter();
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [title, setTitle] = useState("");
   const [candidates, setCandidates] = useState([]);
 
   const addCandidateForm = () => {
@@ -22,20 +30,52 @@ export default function CreateVoting() {
       name: "",
       key: candidates.length + 1,
     };
-
     setCandidates([...candidates, newCandidate]);
   };
 
   const removeCandidateForm = (key) => {
-    const newCandidate = candidates.filter(
+    const newCandidates = candidates.filter(
       (candidate) => candidate.key !== key,
     );
 
-    newCandidate.forEach((candidate, index) => {
+    newCandidates.forEach((candidate, index) => {
       candidate.key = index + 1;
     });
 
-    setCandidates(newCandidate);
+    setCandidates(newCandidates);
+  };
+
+  const submitCandidate = (candidate) => {
+    setCandidates(
+      candidates.map((c) => (c.key === candidate.key ? candidate : c)),
+    );
+  };
+
+  const handleCreateVoting = async () => {
+    try {
+      const { data } = await axios.post(
+        "https://jujurly.cyclic.app/api/v1/rooms",
+        {
+          name: title,
+          start: startDate,
+          end: endDate,
+          candidates: candidates,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (data.success) {
+        return router.push("/dashboard");
+      }
+    } catch (error) {
+      error.response.data.errors.map((error) => {
+        alert(error.message);
+      });
+    }
   };
 
   return (
@@ -69,6 +109,8 @@ export default function CreateVoting() {
                   <Form
                     type="text"
                     placeholder="Contoh: Pemilihan Ketua Osis"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
 
@@ -124,6 +166,7 @@ export default function CreateVoting() {
                   <CandidateForm
                     key={index}
                     candidate={candidate}
+                    submitCandidate={submitCandidate}
                     removeCandidateForm={removeCandidateForm}
                   />
                 ))}
@@ -138,7 +181,11 @@ export default function CreateVoting() {
             </div>
 
             <div className="justify-self-end">
-              <Button text="Buat Voting 🚀" variant="fill" />
+              <Button
+                text="Buat Voting 🚀"
+                variant="fill"
+                onClick={handleCreateVoting}
+              />
             </div>
           </div>
         </section>

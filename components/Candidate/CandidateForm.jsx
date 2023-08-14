@@ -4,7 +4,11 @@ import { HiOutlineX } from "react-icons/hi";
 // import components
 import Form from "../Form";
 
-export default function CandidateForm({ candidate, removeCandidateForm }) {
+export default function CandidateForm({
+  candidate,
+  submitCandidate,
+  removeCandidateForm,
+}) {
   const [isCandidate, setIsCandidate] = useState({
     key: 0,
     name: "",
@@ -13,6 +17,10 @@ export default function CandidateForm({ candidate, removeCandidateForm }) {
   useEffect(() => {
     setIsCandidate(candidate);
   }, [candidate]);
+
+  useEffect(() => {
+    submitCandidate(isCandidate);
+  }, [isCandidate]);
 
   return (
     <div className="relative grid w-[300px] justify-items-center gap-8 border-[2px] border-black/10 p-5">
