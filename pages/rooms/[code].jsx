@@ -2,6 +2,8 @@ import Head from "next/head";
 import axios from "axios";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 
 // import components
 import Layout from "@/components/Layout";
@@ -12,8 +14,35 @@ import CandidateItem from "@/components/Candidate/CandidateItem";
 export default function Voting({ rooms }) {
   const [isClient, setIsClient] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [cookie, setCookie] = useCookies();
+  const token = cookie.token;
+  const router = useRouter();
 
-  console.log(selectedCandidate);
+  const handleSubmitVoting = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms/votes`,
+        {
+          room_id: rooms.data.id,
+          code: rooms.data.code,
+          candidate: {
+            id: selectedCandidate,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (data.success) {
+        return router.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -36,7 +65,6 @@ export default function Voting({ rooms }) {
               <h1 className="section-title mx-auto w-[820px]">
                 {rooms.data.name}
               </h1>
-              <p>room_id: {rooms.data.id}</p>
 
               {/* countdown components */}
               <CountDown end={rooms.data.end} />
@@ -50,9 +78,9 @@ export default function Voting({ rooms }) {
                     key={candidate.id}
                     index={index}
                     candidate={candidate}
-                    isSelected={selectedCandidate?.id === candidate.id}
+                    isSelected={selectedCandidate === candidate.id}
                     onClick={() => {
-                      setSelectedCandidate(candidate);
+                      setSelectedCandidate(candidate.id);
                     }}
                   />
                 );
@@ -60,7 +88,12 @@ export default function Voting({ rooms }) {
             </div>
 
             <div className="grid justify-items-center gap-4">
-              <Button text="Kirim Voting 🚀" variant="fill" className="mt-8" />
+              <Button
+                text="Kirim Voting 🚀"
+                variant="fill"
+                className="mt-8"
+                onClick={handleSubmitVoting}
+              />
 
               <Link
                 href="/dashboard"
