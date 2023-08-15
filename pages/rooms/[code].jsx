@@ -11,6 +11,9 @@ import CandidateItem from "@/components/Candidate/CandidateItem";
 
 export default function Voting({ rooms }) {
   const [isClient, setIsClient] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+
+  console.log(selectedCandidate);
 
   useEffect(() => {
     setIsClient(true);
@@ -33,6 +36,7 @@ export default function Voting({ rooms }) {
               <h1 className="section-title mx-auto w-[820px]">
                 {rooms.data.name}
               </h1>
+              <p>room_id: {rooms.data.id}</p>
 
               {/* countdown components */}
               <CountDown end={rooms.data.end} />
@@ -45,8 +49,11 @@ export default function Voting({ rooms }) {
                   <CandidateItem
                     key={candidate.id}
                     index={index}
-                    name={candidate.name}
-                    percentage={candidate.percentage}
+                    candidate={candidate}
+                    isSelected={selectedCandidate?.id === candidate.id}
+                    onClick={() => {
+                      setSelectedCandidate(candidate);
+                    }}
                   />
                 );
               })}
