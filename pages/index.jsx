@@ -4,9 +4,14 @@ import { useRouter } from "next/router";
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(() => {
+    localStorage.setItem("votes", JSON.stringify([]));
+  }, []);
 
   return (
     <>

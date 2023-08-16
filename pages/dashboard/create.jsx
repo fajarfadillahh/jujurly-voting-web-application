@@ -3,7 +3,7 @@ import Flatpickr from "react-flatpickr";
 import axios from "axios";
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 // reactflatpicr css
@@ -16,8 +16,7 @@ import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
 
 export default function CreateVoting() {
-  const [cookie, setCookie] = useCookies();
-  const token = cookie.token;
+  const token = Cookies.get("token");
   const router = useRouter();
 
   const [startDate, setStartDate] = useState(null);

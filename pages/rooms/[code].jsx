@@ -2,8 +2,9 @@ import Head from "next/head";
 import axios from "axios";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useCookies } from "react-cookie";
+import useSWR from "swr";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 // import components
 import Layout from "@/components/Layout";
@@ -11,12 +12,37 @@ import Button from "@/components/Button";
 import CountDown from "@/components/CountDown/CountDown";
 import CandidateItem from "@/components/Candidate/CandidateItem";
 
-export default function Voting({ rooms }) {
+export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
-  const [cookie, setCookie] = useCookies();
-  const token = cookie.token;
-  const router = useRouter();
+  const [isAvailable, setIsAvailable] = useState(true);
+
+  const token = Cookies.get("token");
+
+  const {
+    data: rooms,
+    mutate,
+    isLoading,
+  } = useSWR(`rooms/?code=${props.code}`, fetcher, {
+    fallback: props.rooms,
+    refreshInterval: 10000,
+  });
+
+  async function fetcher(url) {
+    try {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/${url}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
 
   const handleSubmitVoting = async () => {
     try {
@@ -37,20 +63,68 @@ export default function Voting({ rooms }) {
       );
 
       if (data.success) {
-        return router.reload();
+        mutate();
+
+        const votes = JSON.parse(localStorage.getItem("votes"));
+
+        votes.push({
+          room_id: rooms.data.id,
+        });
+
+        localStorage.setItem("votes", JSON.stringify(votes));
+
+        setIsAvailable(false);
+
+        return Swal.fire({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          text: "Vote data nya berhasil 😄",
+          timer: 2000,
+          icon: "success",
+          timerProgressBar: true,
+        });
       }
     } catch (error) {
-      console.error(error);
+      if (error.response.status == 409) {
+        return Swal.fire({
+          title: "Ups",
+          text: error.response.data.errors[0].message,
+          icon: "error",
+        });
+      }
+
+      Swal.fire({
+        title: "Ups",
+        text: error.message,
+        icon: "error",
+      });
     }
   };
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    const votes = localStorage.getItem("votes");
+
+    if (votes) {
+      const parse = JSON.parse(votes);
+
+      if (parse.find((vote) => vote.room_id == props.rooms.data.id)) {
+        setIsAvailable(false);
+      } else {
+        setIsAvailable(true);
+      }
+    }
+  }, [setIsAvailable]);
 
   if (!isClient) {
     return;
   }
+
+  if (isLoading) {
+    return;
+  }
+
   return (
     <>
       <Head>
@@ -79,6 +153,7 @@ export default function Voting({ rooms }) {
                     index={index}
                     candidate={candidate}
                     isSelected={selectedCandidate === candidate.id}
+                    isAvailable={isAvailable}
                     onClick={() => {
                       setSelectedCandidate(candidate.id);
                     }}
@@ -88,13 +163,14 @@ export default function Voting({ rooms }) {
             </div>
 
             <div className="grid justify-items-center gap-4">
-              <Button
-                text="Kirim Voting 🚀"
-                variant="fill"
-                className="mt-8"
-                onClick={handleSubmitVoting}
-              />
-
+              {isAvailable ? (
+                <Button
+                  text="Kirim Voting 🚀"
+                  variant="fill"
+                  className="mt-8"
+                  onClick={handleSubmitVoting}
+                />
+              ) : null}
               <Link
                 href="/dashboard"
                 className="inline-flex items-center gap-2 font-semibold text-black hover:underline"
@@ -113,7 +189,7 @@ export async function getServerSideProps({ params, req }) {
   const token = req.cookies.token;
 
   try {
-    const { data } = await axios.get(
+    const { data, status } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/rooms?code=${params.code}`,
       {
         headers: {
@@ -122,15 +198,32 @@ export async function getServerSideProps({ params, req }) {
       },
     );
 
+    if (data.success) {
+      return {
+        props: {
+          rooms: data,
+          code: params.code,
+        },
+      };
+    }
     return {
-      props: {
-        rooms: data,
+      redirect: {
+        destination: `/ups?code=${status}&message=${data.errors[0].message}`,
       },
     };
   } catch (error) {
+    console.log(error);
+    if (error.response.status == 404) {
+      return {
+        redirect: {
+          destination: "/404",
+        },
+      };
+    }
+
     return {
       redirect: {
-        destination: `/404?code=${error.response.status}`,
+        destination: `/ups?code=${error.response.status}&message=${error.response.statusText}`,
       },
     };
   }

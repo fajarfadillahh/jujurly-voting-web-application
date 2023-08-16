@@ -2,8 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 // import components
 import Layout from "@/components/Layout";
@@ -11,11 +10,9 @@ import Form from "@/components/Form";
 import Button from "@/components/Button";
 
 export default function Register() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
-  const [cookie, setCookie] = useCookies();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -37,11 +34,11 @@ export default function Register() {
       );
 
       if (data.success) {
-        setCookie("token", data.data.token, {
+        Cookies.set("token", data.data.token, {
           path: "/",
           expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
         });
-        return router.push("/dashboard");
+        return (window.location.href = "/dashboard");
       }
     } catch (error) {
       error.response.data.errors.map((error) => {

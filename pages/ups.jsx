@@ -1,9 +1,14 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 // import components
 import Layout from "@/components/Layout";
+import Button from "@/components/Button";
 
 export default function SomethingWrong() {
+  const router = useRouter();
+
+  const { code, message } = router.query;
   return (
     <>
       <Head>
@@ -18,10 +23,23 @@ export default function SomethingWrong() {
 
             <div className="text-center">
               <h1 className="section-title">Kayanya ada yang salah deh 😱</h1>
-              <p className="section-text">
-                Sepertinya terjadi kesalahan, silakan refresh halaman
+              <p className="section-text text-red-600">
+                Kode Kesalahannya : {code}
                 <br />
-                ini atau kembali ke halaman utama.
+                Pesan Kesalahannya : {message}
+              </p>
+              <br />
+              <br />
+              <p className="section-text">
+                Kamu bisa cek lagi apa yang kamu lakuin
+                <br />
+                atau
+                <br />
+                <Button
+                  text="Kembali"
+                  variant="fill"
+                  onClick={() => router.push("/")}
+                />
               </p>
             </div>
           </div>

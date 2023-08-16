@@ -5,6 +5,7 @@ export default function CandidateItem({
   index,
   isSelected,
   onClick,
+  isAvailable,
 }) {
   return (
     <div className="flex w-[820px] items-center justify-between border-[2px] border-black/10 p-8">
@@ -31,16 +32,18 @@ export default function CandidateItem({
         </div>
       </div>
 
-      <div
-        className={`group inline-flex h-16 w-16 cursor-pointer items-center justify-center text-[32px] ${
-          isSelected
-            ? "bg-black text-white"
-            : "bg-black/10 text-black hover:bg-black/20"
-        }`}
-        onClick={onClick}
-      >
-        <HiCheck />
-      </div>
+      {isAvailable ? (
+        <div
+          className={`group inline-flex h-16 w-16 cursor-pointer items-center justify-center text-[32px] ${
+            isSelected
+              ? "bg-black text-white"
+              : "bg-black/10 text-black hover:bg-black/20"
+          }`}
+          onClick={onClick}
+        >
+          <HiCheck />
+        </div>
+      ) : null}
     </div>
   );
 }

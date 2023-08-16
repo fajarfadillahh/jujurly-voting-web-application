@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 // import components
-import Button from "./Button";
+import Button from "@/components/Button";
 
 export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-  const [cookie, setCookie, removeCookie] = useCookies();
-  const fullname = cookie.fullname;
+  const token = Cookies.get("token");
+  const fullname = Cookies.get("fullname");
 
   useEffect(() => {
     setIsClient(true);
@@ -31,7 +31,7 @@ export default function Navbar() {
           <span className="block font-semibold text-black">
             {fullname ? fullname : null}
           </span>
-          {!cookie.token ? (
+          {!token ? (
             <Button
               text="Masuk"
               variant="fill"
@@ -42,9 +42,9 @@ export default function Navbar() {
               text="Logout"
               variant="fill"
               onClick={() => {
-                removeCookie("token");
-                removeCookie("fullname");
-                return router.push("/");
+                Cookies.remove("token");
+                Cookies.remove("fullname");
+                return (window.location.href = "/");
               }}
             />
           )}

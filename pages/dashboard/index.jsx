@@ -5,7 +5,7 @@ import useSWR from "swr";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 // import utils
 import { convertTime } from "@/utils/convert";
@@ -16,8 +16,7 @@ import Button from "@/components/Button";
 
 export default function Admin(props) {
   const router = useRouter();
-  const [cookies, setCookies] = useCookies();
-  const token = cookies.token;
+  const token = Cookies.get("token");
 
   const {
     data: rooms,
