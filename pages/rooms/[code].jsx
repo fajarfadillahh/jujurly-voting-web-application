@@ -25,7 +25,8 @@ export default function Voting(props) {
     isLoading,
   } = useSWR(`rooms/?code=${props.code}`, fetcher, {
     fallback: props.rooms,
-    refreshInterval: 10000,
+    refreshInterval: Date.now() < props.rooms.data.end ? 10000 : false,
+    revalidateOnFocus: false,
   });
 
   async function fetcher(url) {
@@ -102,6 +103,10 @@ export default function Voting(props) {
     }
   };
 
+  function handleComplete() {
+    setIsAvailable(false);
+  }
+
   useEffect(() => {
     setIsClient(true);
     const votes = localStorage.getItem("votes");
@@ -114,6 +119,10 @@ export default function Voting(props) {
       } else {
         setIsAvailable(true);
       }
+    }
+
+    if (Date.now() > props.rooms.data.end) {
+      setIsAvailable(false);
     }
   }, [setIsAvailable]);
 
@@ -141,7 +150,7 @@ export default function Voting(props) {
               </h1>
 
               {/* countdown components */}
-              <CountDown end={rooms.data.end} />
+              <CountDown end={rooms.data.end} handleComplete={handleComplete} />
             </div>
 
             {/* candidate components */}

@@ -1,7 +1,7 @@
 import Countdown from "react-countdown";
 import CountDownRenderer from "./CountDownRenderer";
 
-export default function CountDown({ className, end }) {
+export default function CountDown({ className, end, handleComplete }) {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
       <CountDownRenderer
@@ -16,7 +16,7 @@ export default function CountDown({ className, end }) {
   return (
     <div className={`grid justify-items-center gap-2 ${className}`}>
       <p className="section-text">Voting akan berakhir dalam:</p>
-      <Countdown date={end} renderer={renderer} />
+      <Countdown date={end} renderer={renderer} onComplete={handleComplete} />
     </div>
   );
 }
