@@ -3,6 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 // import components
 import Layout from "@/components/Layout";
@@ -37,7 +38,11 @@ export default function Login() {
       }
     } catch (error) {
       error.response.data.errors.map((error) => {
-        alert(error.message);
+        Swal.fire({
+          title: "Ups",
+          text: error.message,
+          icon: "error",
+        });
       });
     }
   }

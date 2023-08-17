@@ -5,6 +5,7 @@ import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -72,7 +73,11 @@ export default function CreateVoting() {
       }
     } catch (error) {
       error.response.data.errors.map((error) => {
-        alert(error.message);
+        Swal.fire({
+          title: "Ups",
+          text: error.message,
+          icon: "error",
+        });
       });
     }
   };
@@ -124,7 +129,11 @@ export default function CreateVoting() {
                       options={{ time_24hr: true, minDate: Date.now() }}
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return alert("silahkan pilih waktu mulai");
+                          return Swal.fire({
+                            title: "Ups",
+                            text: "Isi dulu waktu mulai votingnya ya 😄",
+                            icon: "warning",
+                          });
                         }
                         setStartDate(date[0].getTime());
                       }}
@@ -145,7 +154,11 @@ export default function CreateVoting() {
                       options={{ time_24hr: true, minDate: startDate }}
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return alert("silahkan pilih waktu selesai");
+                          return Swal.fire({
+                            title: "Ups",
+                            text: "Isi dulu waktu selesai votingnya ya 😄",
+                            icon: "warning",
+                          });
                         }
                         setEndDate(date[0].getTime());
                       }}
