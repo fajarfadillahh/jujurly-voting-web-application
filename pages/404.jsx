@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // import components
 import Layout from "@/components/Layout";
@@ -18,7 +19,13 @@ export default function NotFound() {
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center gap-8">
-            <img src="/assets/img-2.svg" alt="hero img" className="w-[400px]" />
+            <Image
+              src="/assets/img-2.svg"
+              alt="hero img"
+              className="w-[400px]"
+              width={400}
+              height={400}
+            />
 
             <div className="text-center">
               <h1 className="section-title">Ooppss... Halaman gak ada 😱</h1>

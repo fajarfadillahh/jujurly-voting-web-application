@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // import components
 import Layout from "@/components/Layout";
@@ -33,7 +34,13 @@ export default function Home() {
               </p>
             </div>
 
-            <img src="/assets/img-1.svg" alt="hero img" className="w-[400px]" />
+            <Image
+              src="/assets/img-1.svg"
+              alt="hero img"
+              className="w-[400px]"
+              width={400}
+              height={400}
+            />
 
             <div className="inline-flex items-center gap-6">
               <Button

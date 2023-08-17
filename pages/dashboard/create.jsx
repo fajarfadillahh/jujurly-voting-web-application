@@ -6,6 +6,7 @@ import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Image from "next/image";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -92,7 +93,13 @@ export default function CreateVoting() {
         <section className="pb-16 pt-32">
           <div className="container grid gap-16">
             <div className="grid gap-4">
-              <img src="/assets/img-2.svg" alt="img" className="w-[430px]" />
+              <Image
+                src="/assets/img-2.svg"
+                alt="img"
+                className="w-[430px]"
+                width={430}
+                height={430}
+              />
 
               <div>
                 <h1 className="section-title">Buat Voting Baru 👷</h1>

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 // import utils
 import { convertTime } from "@/utils/convert";
@@ -122,7 +123,13 @@ export default function Admin(props) {
               </p>
             </div>
 
-            <img src="/assets/img-5.svg" alt="hero img" className="w-[400px]" />
+            <Image
+              src="/assets/img-5.svg"
+              alt="hero img"
+              className="w-[400px]"
+              width={400}
+              height={400}
+            />
 
             <div className="inline-flex items-center gap-6">
               <Button

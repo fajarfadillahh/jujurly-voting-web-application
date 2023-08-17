@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Image from "next/image";
 
 // import components
 import Layout from "@/components/Layout";
@@ -25,7 +26,13 @@ export default function Participant() {
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center">
-            <img src="/assets/img-3.svg" alt="hero img" className="w-[400px]" />
+            <Image
+              src="/assets/img-3.svg"
+              alt="hero img"
+              className="w-[400px]"
+              width={400}
+              height={400}
+            />
 
             <div className="grid justify-items-center gap-8">
               <div className="text-center">
