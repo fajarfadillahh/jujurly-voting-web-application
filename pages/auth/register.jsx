@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -29,6 +31,7 @@ export default function Register() {
 
   async function handleRegister() {
     try {
+      setIsLoading(true);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
         { email, fullname, password },
@@ -42,6 +45,7 @@ export default function Register() {
         return (window.location.href = "/dashboard");
       }
     } catch (error) {
+      setIsLoading(false);
       error.response.data.errors.map((error) => {
         Swal.fire({
           title: "Ups",
@@ -91,12 +95,16 @@ export default function Register() {
               />
             </form>
 
-            <Button
-              text="Daftar"
-              variant="fill"
-              className="w-full"
-              onClick={handleRegister}
-            />
+            {isLoading ? (
+              <LoadingButton />
+            ) : (
+              <Button
+                text="Daftar"
+                variant="fill"
+                className="w-full"
+                onClick={handleRegister}
+              />
+            )}
           </div>
 
           <div className="text-[14px] font-medium text-black/60">

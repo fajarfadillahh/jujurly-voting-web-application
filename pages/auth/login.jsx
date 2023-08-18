@@ -9,10 +9,12 @@ import Swal from "sweetalert2";
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleEmail(e) {
     setEmail(e.target.value);
@@ -24,6 +26,7 @@ export default function Login() {
 
   async function handleLogin() {
     try {
+      setIsLoading(true);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
         { email, password },
@@ -37,6 +40,7 @@ export default function Login() {
         return (window.location.href = "/dashboard");
       }
     } catch (error) {
+      setIsLoading(false);
       error.response.data.errors.map((error) => {
         Swal.fire({
           title: "Ups",
@@ -78,12 +82,16 @@ export default function Login() {
               />
             </form>
 
-            <Button
-              text="Masuk"
-              variant="fill"
-              className="w-full"
-              onClick={handleLogin}
-            />
+            {isLoading ? (
+              <LoadingButton />
+            ) : (
+              <Button
+                text="Masuk"
+                variant="fill"
+                className="w-full"
+                onClick={handleLogin}
+              />
+            )}
           </div>
 
           <div className="text-[14px] font-medium text-black/60">
