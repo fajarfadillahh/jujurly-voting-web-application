@@ -14,6 +14,7 @@ import { convertTime } from "@/utils/convert";
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Admin(props) {
   const router = useRouter();
@@ -98,7 +99,7 @@ export default function Admin(props) {
   }
 
   if (isLoading) {
-    return;
+    return <LoadingScreen isLoading={isLoading} />;
   }
 
   return (

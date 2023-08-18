@@ -11,6 +11,7 @@ import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import CountDown from "@/components/CountDown/CountDown";
 import CandidateItem from "@/components/Candidate/CandidateItem";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
@@ -131,7 +132,7 @@ export default function Voting(props) {
   }
 
   if (isLoading) {
-    return;
+    return <LoadingScreen isLoading={isLoading} />;
   }
 
   return (
