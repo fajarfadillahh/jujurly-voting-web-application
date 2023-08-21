@@ -1,6 +1,8 @@
-export default function LoadingButton() {
+export default function LoadingButton({ className }) {
   return (
-    <button className="inline-flex h-[48px] w-full items-center justify-center border bg-black px-10 font-semibold text-white transition hover:bg-black/10 hover:text-black">
+    <button
+      className={`inline-flex h-[48px] w-full cursor-not-allowed items-center justify-center border bg-black/10 px-10 ${className}`}
+    >
       <svg
         aria-hidden="true"
         class="mr-2 inline h-8 w-8 animate-spin fill-gray-600 text-gray-200 dark:fill-gray-300 dark:text-gray-600"

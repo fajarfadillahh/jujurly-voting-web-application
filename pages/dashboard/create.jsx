@@ -16,6 +16,7 @@ import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function CreateVoting() {
   const token = Cookies.get("token");
@@ -25,6 +26,7 @@ export default function CreateVoting() {
   const [endDate, setEndDate] = useState(null);
   const [title, setTitle] = useState("");
   const [candidates, setCandidates] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const addCandidateForm = () => {
     const newCandidate = {
@@ -54,6 +56,7 @@ export default function CreateVoting() {
 
   const handleCreateVoting = async () => {
     try {
+      setIsLoading(true);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
         {
@@ -73,6 +76,7 @@ export default function CreateVoting() {
         return router.push("/dashboard");
       }
     } catch (error) {
+      setIsLoading(false);
       error.response.data.errors.map((error) => {
         Swal.fire({
           title: "Ups",
@@ -200,11 +204,15 @@ export default function CreateVoting() {
             </div>
 
             <div className="justify-self-end">
-              <Button
-                text="Buat Voting 🚀"
-                variant="fill"
-                onClick={handleCreateVoting}
-              />
+              {isLoading ? (
+                <LoadingButton className="w-[197px]" />
+              ) : (
+                <Button
+                  text="Buat Voting 🚀"
+                  variant="fill"
+                  onClick={handleCreateVoting}
+                />
+              )}
             </div>
           </div>
         </section>
