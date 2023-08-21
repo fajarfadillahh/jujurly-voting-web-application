@@ -184,7 +184,7 @@ export default function Admin(props) {
                         <td className="p-5 text-left font-semibold text-black">
                           {index + 1}.
                         </td>
-                        <td className="p-5 text-left">
+                        <td className="max-w-[420px] p-5 text-left">
                           <Link
                             href={`/rooms/${room.code}`}
                             className="font-semibold text-black hover:underline"

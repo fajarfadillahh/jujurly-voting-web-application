@@ -146,7 +146,7 @@ export default function Voting(props) {
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center gap-8">
             <div className="text-center">
-              <h1 className="section-title mx-auto w-[820px]">
+              <h1 className="section-title mx-auto max-w-[920px]">
                 {rooms.data.name}
               </h1>
 
@@ -155,7 +155,7 @@ export default function Voting(props) {
             </div>
 
             {/* candidate components */}
-            <div className="grid justify-items-center gap-6">
+            <div className="grid w-[850px] justify-items-center gap-6">
               {rooms.data.candidates.map((candidate, index) => {
                 return (
                   <CandidateItem
@@ -180,7 +180,11 @@ export default function Voting(props) {
                   className="mt-8"
                   onClick={handleSubmitVoting}
                 />
-              ) : null}
+              ) : (
+                <span className="text-[20px] font-medium text-red-500">
+                  "Kesempatan buat vote cuma 1 kali yaaa 😁"
+                </span>
+              )}
               <Link
                 href="/dashboard"
                 className="inline-flex items-center gap-2 font-semibold text-black hover:underline"

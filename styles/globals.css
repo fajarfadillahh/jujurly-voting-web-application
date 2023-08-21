@@ -26,3 +26,8 @@
     @apply mx-auto min-h-screen max-w-[1440px] overflow-hidden;
   }
 }
+
+/* ::selection style */
+body {
+  @apply selection:bg-pink-500 selection:text-white;
+}
