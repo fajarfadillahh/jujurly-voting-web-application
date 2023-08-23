@@ -4,6 +4,7 @@ export default function Form({
   className,
   onChange,
   value,
+  defaultValue,
 }) {
   return (
     <input
@@ -12,6 +13,7 @@ export default function Form({
       className={`flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60 ${className}`}
       onChange={onChange}
       value={value}
+      defaultValue={defaultValue}
     />
   );
 }

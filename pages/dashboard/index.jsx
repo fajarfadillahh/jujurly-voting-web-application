@@ -98,6 +98,33 @@ export default function Admin(props) {
     });
   }
 
+  // const handleEditVoting = async (id) => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/rooms?id=${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         data: {
+  //           id: id,
+  //           name: rooms.name,
+  //           start: rooms.start,
+  //           end: rooms.end,
+  //           code: rooms.code,
+  //           candidates: rooms.candidates,
+  //         },
+  //       },
+  //     );
+
+  //     if (data.success) {
+  //       console.log(data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   if (isLoading) {
     return <LoadingScreen isLoading={isLoading} />;
   }
@@ -204,7 +231,7 @@ export default function Admin(props) {
                         <td className="p-5 text-left font-semibold text-black">
                           <div className="flex items-center justify-center gap-3">
                             <Link
-                              href="#"
+                              href={`/dashboard/edit/${room.id}`}
                               className="p-1 text-[22px] text-black hover:bg-black/10"
                             >
                               <HiOutlinePencilAlt />
