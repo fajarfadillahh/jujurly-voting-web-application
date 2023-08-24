@@ -25,16 +25,16 @@ export default function Participant() {
       <Layout>
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
-          <div className="container grid justify-items-center">
+          <div className="container grid">
             <Image
               src="/assets/img-3.svg"
               alt="hero img"
-              className="w-[400px]"
+              className="w-[400px] justify-self-center"
               width={400}
               height={400}
             />
 
-            <div className="grid justify-items-center gap-8">
+            <div className="grid gap-8">
               <div className="text-center">
                 <h1 className="section-title">Ayo, Ikut Voting 🚀</h1>
                 <p className="section-text">
@@ -43,7 +43,7 @@ export default function Participant() {
                 </p>
               </div>
 
-              <div className="grid min-w-[420px] gap-2">
+              <div className="mx-auto grid w-full gap-2 sm:max-w-[420px]">
                 <Form
                   type="text"
                   placeholder="Masukan Kode Voting"
@@ -56,14 +56,13 @@ export default function Participant() {
                   variant="fill"
                   onClick={() => router.push(`/rooms/${code}`)}
                 />
+                <Link
+                  href="/dashboard"
+                  className="mt-6 inline-flex justify-self-center font-semibold text-black hover:underline"
+                >
+                  Kembali
+                </Link>
               </div>
-
-              <Link
-                href="/dashboard"
-                className="inline-flex font-semibold text-black hover:underline"
-              >
-                Kembali
-              </Link>
             </div>
           </div>
         </section>
