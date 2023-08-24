@@ -58,7 +58,7 @@ export default function Login() {
       </Head>
 
       <Layout className="flex items-center justify-center">
-        <section className="container grid justify-items-center gap-8">
+        <section className="container grid gap-8">
           <div className="text-center">
             <h1 className="section-title">Hi, Selamat datang kembali 👏</h1>
             <p className="section-text">
@@ -66,7 +66,7 @@ export default function Login() {
             </p>
           </div>
 
-          <div className="mx-auto grid min-w-[420px] gap-[30px]">
+          <div className="mx-auto grid w-full gap-8 sm:max-w-[420px]">
             <form action="" className="grid gap-2">
               <Form
                 type="email"
@@ -94,7 +94,7 @@ export default function Login() {
             )}
           </div>
 
-          <div className="text-[14px] font-medium text-black/60">
+          <div className="justify-self-center text-[14px] font-medium text-black/60">
             Belum punya akun? Klik{" "}
             <Link href="/auth/register" className="font-bold text-black">
               disini
