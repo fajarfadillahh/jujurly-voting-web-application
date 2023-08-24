@@ -98,33 +98,6 @@ export default function Admin(props) {
     });
   }
 
-  // const handleEditVoting = async (id) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/rooms?id=${id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //         data: {
-  //           id: id,
-  //           name: rooms.name,
-  //           start: rooms.start,
-  //           end: rooms.end,
-  //           code: rooms.code,
-  //           candidates: rooms.candidates,
-  //         },
-  //       },
-  //     );
-
-  //     if (data.success) {
-  //       console.log(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   if (isLoading) {
     return <LoadingScreen isLoading={isLoading} />;
   }

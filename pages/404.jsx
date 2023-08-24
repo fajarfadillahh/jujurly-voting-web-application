@@ -38,7 +38,7 @@ export default function NotFound() {
             <Button
               text="Kembali ke halaman utama"
               variant="fill"
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/dashboard")}
             />
           </div>
         </section>
