@@ -23,7 +23,7 @@ export default function EditVoting({ rooms }) {
 
   const [title, setTitle] = useState(rooms.data.name);
   const [startFromInput, setStartFromInput] = useState(null);
-  const [endFromDataInput, setEndInput] = useState(null);
+  const [endFromInput, setEndInput] = useState(null);
   const [startFromData, setStartFromData] = useState(rooms.data.start);
   const [endFromData, setEndFromData] = useState(rooms.data.end);
   const [candidates, setCandidates] = useState(rooms.data.candidates);
@@ -60,7 +60,7 @@ export default function EditVoting({ rooms }) {
     console.log({
       title,
       start: startFromInput ? startFromInput : startFromData,
-      end: endFromDataInput ? endFromDataInput : endFromData,
+      end: endFromInput ? endFromInput : endFromData,
       candidates,
     });
   };
@@ -148,7 +148,7 @@ export default function EditVoting({ rooms }) {
                     <Flatpickr
                       data-enable-time
                       options={{ time_24hr: true, minDate: startFromInput }}
-                      value={endFromDataInput ? endFromDataInput : endFromData}
+                      value={endFromInput ? endFromInput : endFromData}
                       onClose={(date) => {
                         if (date.length == 0) {
                           return Swal.fire({
