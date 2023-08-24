@@ -108,7 +108,7 @@ export default function EditVoting({ rooms }) {
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
                   <div className="grid gap-2">
                     <label className="font-semibold text-black">
                       Waktu Mulai
@@ -137,7 +137,7 @@ export default function EditVoting({ rooms }) {
                       placeholder="Pilih Waktu Mulai"
                     />
                   </div>
-                  <span className="pt-[24px] font-semibold text-black">
+                  <span className="font-semibold text-black sm:pt-[24px]">
                     s/d
                   </span>
                   <div className="grid gap-2">

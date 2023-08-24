@@ -34,9 +34,12 @@ export default function Navbar() {
             menuOpen ? "scale-y-100" : "scale-y-0"
           }`}
         >
-          <span className="block font-semibold text-black">
+          <Link
+            href="/dashboard"
+            className="block font-semibold text-black hover:underline"
+          >
             {fullname ? fullname : null}
-          </span>
+          </Link>
           {!token ? (
             <Button
               text="Masuk"
