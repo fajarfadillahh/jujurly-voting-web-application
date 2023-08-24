@@ -114,7 +114,7 @@ export default function Admin(props) {
       <Layout>
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
-          <div className="container grid justify-items-center gap-8">
+          <div className="container grid gap-8">
             <div className="text-center">
               <h1 className="section-title">
                 Hi, Senang bisa melihatmu lagi 👏
@@ -127,20 +127,22 @@ export default function Admin(props) {
             <Image
               src="/assets/img-5.svg"
               alt="hero img"
-              className="w-[400px]"
+              className="w-[400px] justify-self-center"
               width={400}
               height={400}
             />
 
-            <div className="inline-flex items-center gap-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
               <Button
                 text="Ikut Voting"
                 variant="fill"
+                className="w-full sm:w-auto"
                 onClick={() => router.push("/rooms")}
               />
               <Button
                 text="Buat Voting"
                 variant="stroke"
+                className="w-full sm:w-auto"
                 onClick={() => router.push("/dashboard/create")}
               />
             </div>
@@ -154,75 +156,81 @@ export default function Admin(props) {
               Voting yang sudah dibuat.
             </h1>
 
-            <table className="w-full table-auto border-[2px] border-black/10">
-              <thead className="border-b-[2px] border-black/10">
-                <tr>
-                  <th className="p-5 text-left font-bold text-black">No</th>
-                  <th className="p-5 text-left font-bold text-black">Judul</th>
-                  <th className="p-5 text-left font-bold text-black">Kode</th>
-                  <th className="p-5 text-left font-bold text-black">Mulai</th>
-                  <th className="p-5 text-left font-bold text-black">
-                    Selesai
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.data.length == 0 ? (
+            <div className="overflow-x-scroll sm:overflow-x-hidden">
+              <table className="w-[1000px] table-auto border-[2px] border-black/10 sm:w-[1280px]">
+                <thead className="border-b-[2px] border-black/10">
                   <tr>
-                    <td
-                      colSpan={6}
-                      className="p-5 text-center font-semibold text-black"
-                    >
-                      Waduh belum ada datanya nih 😀
-                    </td>
+                    <th className="p-5 text-left font-bold text-black">No</th>
+                    <th className="p-5 text-left font-bold text-black">
+                      Judul
+                    </th>
+                    <th className="p-5 text-left font-bold text-black">Kode</th>
+                    <th className="p-5 text-left font-bold text-black">
+                      Mulai
+                    </th>
+                    <th className="p-5 text-left font-bold text-black">
+                      Selesai
+                    </th>
+                    <th></th>
                   </tr>
-                ) : (
-                  rooms.data.map((room, index) => {
-                    return (
-                      <tr key={room.id}>
-                        <td className="p-5 text-left font-semibold text-black">
-                          {index + 1}.
-                        </td>
-                        <td className="max-w-[420px] p-5 text-left">
-                          <Link
-                            href={`/rooms/${room.code}`}
-                            className="font-semibold text-black hover:underline"
-                          >
-                            {room.name}
-                          </Link>
-                        </td>
-                        <td className="p-5 text-left font-medium uppercase text-black">
-                          {room.code}
-                        </td>
-                        <td className="p-5 text-left font-semibold text-black">
-                          {convertTime(room.start)}
-                        </td>
-                        <td className="p-5 text-left font-semibold text-black">
-                          {convertTime(room.end)}
-                        </td>
-                        <td className="p-5 text-left font-semibold text-black">
-                          <div className="flex items-center justify-center gap-3">
+                </thead>
+                <tbody>
+                  {rooms.data.length == 0 ? (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        className="p-5 text-center font-semibold text-black"
+                      >
+                        Waduh belum ada datanya nih 😀
+                      </td>
+                    </tr>
+                  ) : (
+                    rooms.data.map((room, index) => {
+                      return (
+                        <tr key={room.id}>
+                          <td className="p-5 text-left font-semibold text-black">
+                            {index + 1}.
+                          </td>
+                          <td className="max-w-[420px] p-5 text-left">
                             <Link
-                              href={`/dashboard/edit/${room.id}`}
-                              className="p-1 text-[22px] text-black hover:bg-black/10"
+                              href={`/rooms/${room.code}`}
+                              className="font-semibold text-black hover:underline"
                             >
-                              <HiOutlinePencilAlt />
+                              {room.name}
                             </Link>
-                            <button
-                              className="p-1 text-[22px] text-black hover:bg-black/10"
-                              onClick={() => handleDelete(room.id, room.code)}
-                            >
-                              <HiOutlineTrash />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+                          </td>
+                          <td className="p-5 text-left font-medium uppercase text-black">
+                            {room.code}
+                          </td>
+                          <td className="p-5 text-left font-semibold text-black">
+                            {convertTime(room.start)}
+                          </td>
+                          <td className="p-5 text-left font-semibold text-black">
+                            {convertTime(room.end)}
+                          </td>
+                          <td className="p-5 text-left font-semibold text-black">
+                            <div className="flex items-center justify-center gap-3">
+                              <Link
+                                href={`/dashboard/edit/${room.id}`}
+                                className="p-1 text-[22px] text-black hover:bg-black/10"
+                              >
+                                <HiOutlinePencilAlt />
+                              </Link>
+                              <button
+                                className="p-1 text-[22px] text-black hover:bg-black/10"
+                                onClick={() => handleDelete(room.id, room.code)}
+                              >
+                                <HiOutlineTrash />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
       </Layout>

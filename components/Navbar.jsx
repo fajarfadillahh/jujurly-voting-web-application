@@ -30,7 +30,7 @@ export default function Navbar() {
         </Link>
 
         <div
-          className={`fixed left-0 top-24 flex w-full origin-top flex-col items-center justify-center gap-4 bg-white py-8 shadow-[0_3px_6px_rgba(0,0,0,0.1)] transition sm:static sm:w-auto sm:scale-y-100 sm:flex-row sm:bg-transparent sm:p-0 sm:shadow-none ${
+          className={`fixed left-0 top-24 flex w-full origin-top flex-col items-center justify-center gap-4 bg-white px-6 py-8 shadow-[0_3px_6px_rgba(0,0,0,0.1)] transition sm:static sm:w-auto sm:scale-y-100 sm:flex-row sm:bg-transparent sm:p-0 sm:shadow-none ${
             menuOpen ? "scale-y-100" : "scale-y-0"
           }`}
         >
@@ -41,12 +41,14 @@ export default function Navbar() {
             <Button
               text="Masuk"
               variant="fill"
+              className="w-full sm:w-auto"
               onClick={() => router.push("/auth/login")}
             />
           ) : (
             <Button
               text="Logout"
               variant="fill"
+              className="w-full sm:w-auto"
               onClick={() => {
                 Cookies.remove("token");
                 Cookies.remove("fullname");
