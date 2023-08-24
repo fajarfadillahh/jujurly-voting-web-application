@@ -31,27 +31,28 @@ export default function CreateVoting() {
   const addCandidateForm = () => {
     const newCandidate = {
       name: "",
-      key: candidates.length + 1,
+      id: candidates.length + 1,
     };
     setCandidates([...candidates, newCandidate]);
   };
 
-  const removeCandidateForm = (key) => {
-    const newCandidates = candidates.filter(
-      (candidate) => candidate.key !== key,
-    );
-
-    newCandidates.forEach((candidate, index) => {
-      candidate.key = index + 1;
-    });
+  const removeCandidateForm = (id) => {
+    const newCandidates = candidates.filter((candidate) => candidate.id !== id);
 
     setCandidates(newCandidates);
   };
 
-  const submitCandidate = (candidate) => {
-    setCandidates(
-      candidates.map((c) => (c.key === candidate.key ? candidate : c)),
+  const handleCandidateName = (value, id) => {
+    const indexOfCandidate = candidates.findIndex(
+      (candidate) => candidate.id == id,
     );
+
+    candidates[indexOfCandidate] = {
+      id,
+      name: value,
+    };
+
+    setCandidates([...candidates]);
   };
 
   const handleCreateVoting = async () => {
@@ -189,8 +190,9 @@ export default function CreateVoting() {
                   <CandidateForm
                     key={index}
                     candidate={candidate}
-                    submitCandidate={submitCandidate}
                     removeCandidateForm={removeCandidateForm}
+                    index={index}
+                    handleCandidateName={handleCandidateName}
                   />
                 ))}
 

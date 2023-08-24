@@ -22,35 +22,47 @@ export default function EditVoting({ rooms }) {
   const token = Cookies.get("token");
 
   const [title, setTitle] = useState(rooms.data.name);
-  const [startDate, setStartDate] = useState(rooms.data.start);
-  const [endDate, setEndDate] = useState(rooms.data.end);
-  const [candidates, setCandidates] = useState([]);
+  const [startFromInput, setStartFromInput] = useState(null);
+  const [endFromDataInput, setEndInput] = useState(null);
+  const [startFromData, setStartFromData] = useState(rooms.data.start);
+  const [endFromData, setEndFromData] = useState(rooms.data.end);
+  const [candidates, setCandidates] = useState(rooms.data.candidates);
   const [isLoading, setIsLoading] = useState(false);
 
   const addCandidateForm = () => {
     const newCandidate = {
       name: "",
-      key: candidates.length + 1,
+      id: candidates.length + 1,
     };
     setCandidates([...candidates, newCandidate]);
   };
 
-  const removeCandidateForm = (key) => {
-    const newCandidates = candidates.filter(
-      (candidate) => candidate.key !== key,
-    );
-
-    newCandidates.forEach((candidate, index) => {
-      candidate.key = index + 1;
-    });
+  const removeCandidateForm = (id) => {
+    const newCandidates = candidates.filter((candidate) => candidate.id !== id);
 
     setCandidates(newCandidates);
   };
 
-  const submitCandidate = (candidate) => {
-    setCandidates(
-      candidates.map((c) => (c.key === candidate.key ? candidate : c)),
+  const handleCandidateName = (value, id) => {
+    const indexOfCandidate = candidates.findIndex(
+      (candidate) => candidate.id == id,
     );
+
+    candidates[indexOfCandidate] = {
+      id,
+      name: value,
+    };
+
+    setCandidates([...candidates]);
+  };
+
+  const handleUpdateVoting = async () => {
+    console.log({
+      title,
+      start: startFromInput ? startFromInput : startFromData,
+      end: endFromDataInput ? endFromDataInput : endFromData,
+      candidates,
+    });
   };
 
   return (
@@ -92,6 +104,7 @@ export default function EditVoting({ rooms }) {
                     placeholder="Contoh: Pemilihan Ketua Osis"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    setTitle={setTitle}
                   />
                 </div>
 
@@ -103,8 +116,13 @@ export default function EditVoting({ rooms }) {
 
                     <Flatpickr
                       data-enable-time
-                      options={{ time_24hr: true, minDate: startDate }}
-                      value={startDate}
+                      options={{
+                        time_24hr: true,
+                        minDate: Date.now(),
+                      }}
+                      value={
+                        startFromData > Date.now() ? startFromData : Date.now()
+                      }
                       onClose={(date) => {
                         if (date.length == 0) {
                           return Swal.fire({
@@ -113,7 +131,7 @@ export default function EditVoting({ rooms }) {
                             icon: "warning",
                           });
                         }
-                        setStartDate(date[0].getTime());
+                        setStartFromInput(date[0].getTime());
                       }}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
                       placeholder="Pilih Waktu Mulai"
@@ -129,8 +147,8 @@ export default function EditVoting({ rooms }) {
 
                     <Flatpickr
                       data-enable-time
-                      options={{ time_24hr: true, minDate: startDate }}
-                      value={startDate}
+                      options={{ time_24hr: true, minDate: startFromInput }}
+                      value={endFromDataInput ? endFromDataInput : endFromData}
                       onClose={(date) => {
                         if (date.length == 0) {
                           return Swal.fire({
@@ -139,7 +157,7 @@ export default function EditVoting({ rooms }) {
                             icon: "warning",
                           });
                         }
-                        setEndDate(date[0].getTime());
+                        setEndInput(date[0].getTime());
                       }}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
                       placeholder="Pilih Waktu Selesai"
@@ -157,8 +175,9 @@ export default function EditVoting({ rooms }) {
                   <CandidateForm
                     key={index}
                     candidate={candidate}
-                    submitCandidate={submitCandidate}
                     removeCandidateForm={removeCandidateForm}
+                    index={index}
+                    handleCandidateName={handleCandidateName}
                   />
                 ))}
 
@@ -172,7 +191,11 @@ export default function EditVoting({ rooms }) {
             </div>
 
             <div className="justify-self-end">
-              <Button text="Perbarui Voting 🚀" variant="fill" />
+              <Button
+                text="Perbarui Voting 🚀"
+                variant="fill"
+                onClick={handleUpdateVoting}
+              />
             </div>
           </div>
         </section>
