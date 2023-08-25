@@ -27,7 +27,7 @@ export default function Home() {
       <Layout>
         {/* ===== hero section ===== */}
         <section className="pb-16 pt-32">
-          <div className="container grid justify-items-center gap-8">
+          <div className="container grid gap-8">
             <div className="text-center">
               <h1 className="section-title">Ayo, Mulai Voting Sekarang 🚀</h1>
               <p className="section-text">
@@ -38,20 +38,22 @@ export default function Home() {
             <Image
               src="/assets/img-1.svg"
               alt="hero img"
-              className="w-[400px]"
+              className="w-[400px] justify-self-center"
               width={400}
               height={400}
             />
 
-            <div className="inline-flex items-center gap-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
               <Button
                 text="Ikut Voting"
                 variant="fill"
+                className="w-full sm:w-auto"
                 onClick={() => router.push("/rooms")}
               />
               <Button
                 text="Buat Voting"
                 variant="stroke"
+                className="w-full sm:w-auto"
                 onClick={() => router.push("/dashboard/create")}
               />
             </div>
