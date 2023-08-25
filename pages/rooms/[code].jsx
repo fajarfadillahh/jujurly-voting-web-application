@@ -1,10 +1,9 @@
-import Head from "next/head";
-import axios from "axios";
-import Link from "next/link";
+// import utility
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import fetcher from "@/utils/fetcher";
 
 // import components
 import Layout from "@/components/Layout";
@@ -12,6 +11,8 @@ import Button from "@/components/Button";
 import CountDown from "@/components/CountDown/CountDown";
 import CandidateItem from "@/components/Candidate/CandidateItem";
 import LoadingScreen from "@/components/LoadingScreen";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
@@ -24,22 +25,15 @@ export default function Voting(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR(`rooms/?code=${props.code}`, fetcher, {
+  } = useSWR(`/rooms/?code=${props.code}`, useSWRfetch, {
     fallback: props.rooms,
     refreshInterval: Date.now() < props.rooms.data.end ? 10000 : false,
     revalidateOnFocus: false,
   });
 
-  async function fetcher(url) {
+  async function useSWRfetch(url) {
     try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/${url}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const { data } = await fetcher(url, "GET", null, token);
       return data;
     } catch (error) {
       return error;
@@ -48,8 +42,9 @@ export default function Voting(props) {
 
   const handleSubmitVoting = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms/votes`,
+      const { data } = await fetcher(
+        "/rooms/votes",
+        "POST",
         {
           room_id: rooms.data.id,
           code: rooms.data.code,
@@ -57,14 +52,11 @@ export default function Voting(props) {
             id: selectedCandidate,
           },
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        token,
       );
 
       if (data.success) {
+        // do refetch
         mutate();
 
         const votes = JSON.parse(localStorage.getItem("votes"));
@@ -182,7 +174,7 @@ export default function Voting(props) {
                 />
               ) : (
                 <span className="text-[20px] font-medium text-red-500">
-                  "Kesempatan buat vote cuma 1 kali yaaa 😁"
+                  Kesempatan buat vote cuma 1 kali yaaa 😁
                 </span>
               )}
               <Link
@@ -203,13 +195,11 @@ export async function getServerSideProps({ params, req }) {
   const token = req.cookies.token;
 
   try {
-    const { data, status } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms?code=${params.code}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    const { data, status } = await fetcher(
+      `/rooms?code=${params.code}`,
+      "GET",
+      null,
+      token,
     );
 
     if (data.success) {
@@ -220,13 +210,13 @@ export async function getServerSideProps({ params, req }) {
         },
       };
     }
+
     return {
       redirect: {
         destination: `/ups?code=${status}&message=${data.errors[0].message}`,
       },
     };
   } catch (error) {
-    console.log(error);
     if (error.response.status == 404) {
       return {
         redirect: {

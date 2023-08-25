@@ -1,12 +1,10 @@
-import Head from "next/head";
-import Flatpickr from "react-flatpickr";
-import axios from "axios";
+// import utility
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import Image from "next/image";
+import fetcher from "@/utils/fetcher";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -17,6 +15,9 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
 import LoadingButton from "@/components/LoadingButton";
+import Head from "next/head";
+import Flatpickr from "react-flatpickr";
+import Image from "next/image";
 
 export default function CreateVoting() {
   const token = Cookies.get("token");
@@ -58,19 +59,16 @@ export default function CreateVoting() {
   const handleCreateVoting = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+      const { data } = await fetcher(
+        "/rooms",
+        "POST",
         {
           name: title,
           start: startDate,
           end: endDate,
           candidates: candidates,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        token,
       );
 
       if (data.success) {

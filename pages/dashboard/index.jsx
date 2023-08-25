@@ -1,20 +1,19 @@
-import Head from "next/head";
-import Link from "next/link";
-import axios from "axios";
+// import utility
 import useSWR from "swr";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import Cookies from "js-cookie";
-import Image from "next/image";
-
-// import utils
+import fetcher from "@/utils/fetcher";
 import { convertTime } from "@/utils/convert";
 
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import LoadingScreen from "@/components/LoadingScreen";
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Admin(props) {
   const router = useRouter();
@@ -24,21 +23,14 @@ export default function Admin(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR("rooms", fetcher, {
+  } = useSWR("/rooms", useSWRfetch, {
     revalidateOnFocus: false,
     fallback: props.rooms,
   });
 
-  async function fetcher(url) {
+  async function useSWRfetch(url) {
     try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/${url}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const { data } = await fetcher(url, "GET", null, token);
       return data;
     } catch (error) {
       return error;
@@ -59,17 +51,14 @@ export default function Admin(props) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await axios.delete(
-            `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+          const { data } = await fetcher(
+            "/rooms",
+            "DELETE",
             {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              data: {
-                room_id: room_id,
-                code,
-              },
+              room_id: room_id,
+              code,
             },
+            token,
           );
 
           if (data.success) {
@@ -87,7 +76,6 @@ export default function Admin(props) {
             mutate();
           }
         } catch (error) {
-          console.log(error);
           Swal.fire({
             title: "Ups",
             text: error.message,
@@ -97,33 +85,6 @@ export default function Admin(props) {
       }
     });
   }
-
-  // const handleEditVoting = async (id) => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/rooms?id=${id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //         data: {
-  //           id: id,
-  //           name: rooms.name,
-  //           start: rooms.start,
-  //           end: rooms.end,
-  //           code: rooms.code,
-  //           candidates: rooms.candidates,
-  //         },
-  //       },
-  //     );
-
-  //     if (data.success) {
-  //       console.log(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   if (isLoading) {
     return <LoadingScreen isLoading={isLoading} />;
@@ -261,14 +222,7 @@ export async function getServerSideProps({ req }) {
   const token = req.cookies.token;
 
   try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const { data } = await fetcher("/rooms", "GET", null, token);
 
     return {
       props: {
@@ -278,7 +232,7 @@ export async function getServerSideProps({ req }) {
   } catch (error) {
     return {
       redirect: {
-        destination: `/404?code=${error.response.status}`,
+        destination: `/ups?code=${error.response.status}&message=${error.response.statusText}`,
       },
     };
   }

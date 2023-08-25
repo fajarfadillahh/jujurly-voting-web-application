@@ -1,12 +1,10 @@
-import Head from "next/head";
-import Flatpickr from "react-flatpickr";
-import axios from "axios";
+// import utility
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import Image from "next/image";
+import fetcher from "@/utils/fetcher";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -17,13 +15,16 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
 import LoadingButton from "@/components/LoadingButton";
+import Head from "next/head";
+import Flatpickr from "react-flatpickr";
+import Image from "next/image";
 
 export default function EditVoting({ rooms }) {
   const token = Cookies.get("token");
 
   const [title, setTitle] = useState(rooms.data.name);
   const [startFromInput, setStartFromInput] = useState(null);
-  const [endFromInput, setEndInput] = useState(null);
+  const [endFromInput, setEndFromInput] = useState(null);
   const [startFromData, setStartFromData] = useState(rooms.data.start);
   const [endFromData, setEndFromData] = useState(rooms.data.end);
   const [candidates, setCandidates] = useState(rooms.data.candidates);
@@ -157,7 +158,7 @@ export default function EditVoting({ rooms }) {
                             icon: "warning",
                           });
                         }
-                        setEndInput(date[0].getTime());
+                        setEndFromInput(date[0].getTime());
                       }}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
                       placeholder="Pilih Waktu Selesai"
@@ -208,26 +209,33 @@ export async function getServerSideProps({ params, req }) {
   const token = req.cookies.token;
 
   try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms?id=${params.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    const { data } = await fetcher(
+      `/rooms?id=${params.id}`,
+      "GET",
+      null,
+      token,
     );
 
     if (data.success) {
-      if (data.success) {
-        return {
-          props: {
-            rooms: data,
-            id: params.id,
-          },
-        };
-      }
+      return {
+        props: {
+          rooms: data,
+        },
+      };
     }
   } catch (error) {
-    console.log(error);
+    if (error.response.status == 404) {
+      return {
+        redirect: {
+          destination: "/404",
+        },
+      };
+    }
+
+    return {
+      redirect: {
+        destination: `/ups?code=${error.response.status}&message=${error.response.statusText}`,
+      },
+    };
   }
 }
