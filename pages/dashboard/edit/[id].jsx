@@ -21,6 +21,7 @@ import Image from "next/image";
 
 export default function EditVoting({ rooms }) {
   const token = Cookies.get("token");
+  const router = useRouter();
 
   const [title, setTitle] = useState(rooms.data.name);
   const [startFromInput, setStartFromInput] = useState(null);
@@ -58,12 +59,28 @@ export default function EditVoting({ rooms }) {
   };
 
   const handleUpdateVoting = async () => {
-    console.log({
-      title,
-      start: startFromInput ? startFromInput : startFromData,
-      end: endFromInput ? endFromInput : endFromData,
-      candidates,
-    });
+    try {
+      setIsLoading(true);
+      const { data } = await fetcher(
+        "/rooms",
+        "PATCH",
+        {
+          room_id: rooms.data.id,
+          name: title,
+          start: startFromInput ? startFromInput : startFromData,
+          end: endFromInput ? endFromInput : endFromData,
+          candidates: candidates,
+        },
+        token,
+      );
+
+      if (data.success) {
+        return router.push("/dashboard");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
   };
 
   return (
@@ -192,11 +209,15 @@ export default function EditVoting({ rooms }) {
             </div>
 
             <div className="justify-self-end">
-              <Button
-                text="Perbarui Voting 🚀"
-                variant="fill"
-                onClick={handleUpdateVoting}
-              />
+              {isLoading ? (
+                <LoadingButton className="w-[227px]" />
+              ) : (
+                <Button
+                  text="Perbarui Voting 🚀"
+                  variant="fill"
+                  onClick={handleUpdateVoting}
+                />
+              )}
             </div>
           </div>
         </section>
