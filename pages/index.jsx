@@ -1,11 +1,12 @@
-import Head from "next/head";
+// import utility
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { useEffect } from "react";
 
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
-import { useEffect } from "react";
+import Image from "next/image";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();

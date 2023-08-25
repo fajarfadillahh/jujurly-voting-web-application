@@ -1,10 +1,11 @@
-import Head from "next/head";
+// import utility
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
+import Head from "next/head";
+import Image from "next/image";
 
 export default function SomethingWrong() {
   const router = useRouter();

@@ -1,13 +1,14 @@
-import Head from "next/head";
-import Link from "next/link";
+// import utility
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Image from "next/image";
 
 // import components
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Participant() {
   const [code, setCode] = useState("");

@@ -1,15 +1,16 @@
-import Head from "next/head";
-import Link from "next/link";
-import axios from "axios";
+// import utility
 import { useState } from "react";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import fetcher from "@/utils/fetcher";
 
 // import components
 import Layout from "@/components/Layout";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 import LoadingButton from "@/components/LoadingButton";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,9 +28,14 @@ export default function Login() {
   async function handleLogin() {
     try {
       setIsLoading(true);
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
-        { email, password },
+      const { data } = await fetcher(
+        "/users/login",
+        "POST",
+        {
+          email,
+          password,
+        },
+        null,
       );
 
       if (data.success) {
