@@ -1,11 +1,14 @@
 import "@/styles/globals.css";
 import NextNProgress from "nextjs-progressbar";
+import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <NextNProgress color="#000" />
-      <Component {...pageProps} />
+      <ThemeProvider attribute="class" disableTransitionOnChange>
+        <NextNProgress color="#000" />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 }
