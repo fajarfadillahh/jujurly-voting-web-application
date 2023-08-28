@@ -43,10 +43,11 @@ export default function SomethingWrong() {
                 <br />
                 atau
                 <br />
+                <br />
                 <Button
-                  text="Kembali"
+                  text="Kembali 🚀"
                   variant="fill"
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/dashboard")}
                 />
               </p>
             </div>

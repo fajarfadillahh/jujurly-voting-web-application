@@ -18,7 +18,9 @@ export default function CandidateItem({
             <span className="text-[24px] font-bold text-black">
               {candidate.name}
             </span>
-            <span className="font-medium text-black">Kandidat {index + 1}</span>
+            <span className="font-medium text-black">
+              Kandidat / Opsi {index + 1}
+            </span>
           </div>
         </div>
 
