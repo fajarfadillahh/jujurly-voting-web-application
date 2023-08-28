@@ -4,7 +4,7 @@ import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import fetcher from "@/utils/fetcher";
-import { launchAlert } from "@/utils/sweetalert";
+import { launchAlert, launchToast } from "@/utils/sweetalert";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -72,6 +72,7 @@ export default function CreateVoting() {
       );
 
       if (data.success) {
+        launchToast("success", "Berhasil bikin room 😄");
         return router.push("/dashboard");
       }
     } catch (error) {
@@ -164,6 +165,7 @@ export default function CreateVoting() {
                             "warning",
                           );
                         }
+                        setEndDate(date[0].getTime());
                       }}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
                       placeholder="Pilih Waktu Selesai"

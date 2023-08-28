@@ -17,14 +17,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePassword(e) {
-    setPassword(e.target.value);
-  }
-
   async function handleLogin() {
     try {
       setIsLoading(true);
@@ -73,13 +65,13 @@ export default function Login() {
               <Form
                 type="email"
                 placeholder="Alamat Email"
-                onChange={handleEmail}
+                onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
               <Form
                 type="password"
                 placeholder="Kata Sandi"
-                onChange={handlePassword}
+                onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
             </form>

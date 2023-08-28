@@ -72,10 +72,6 @@ export default function Voting(props) {
     }
   };
 
-  function handleComplete() {
-    setIsAvailable(false);
-  }
-
   useEffect(() => {
     setIsClient(true);
     const votes = localStorage.getItem("votes");
@@ -119,7 +115,10 @@ export default function Voting(props) {
               </h1>
 
               {/* countdown components */}
-              <CountDown end={rooms.data.end} handleComplete={handleComplete} />
+              <CountDown
+                end={rooms.data.end}
+                handleComplete={() => setIsAvailable(false)}
+              />
             </div>
 
             {/* candidate components */}

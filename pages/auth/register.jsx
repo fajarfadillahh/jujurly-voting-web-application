@@ -18,18 +18,6 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleFullname = (e) => {
-    setFullname(e.target.value);
-  };
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
   async function handleRegister() {
     try {
       setIsLoading(true);
@@ -78,19 +66,19 @@ export default function Register() {
                 type="email"
                 placeholder="Alamat Email"
                 value={email}
-                onChange={handleEmail}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Form
                 type="text"
                 placeholder="Nama Lengkap"
                 value={fullname}
-                onChange={handleFullname}
+                onChange={(e) => setFullname(e.target.value)}
               />
               <Form
                 type="password"
                 placeholder="Kata Sandi"
                 value={password}
-                onChange={handlePassword}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </form>
 
