@@ -140,23 +140,27 @@ export default function Admin(props) {
         {/* ===== table section ===== */}
         <section className="py-16">
           <div className="container grid gap-6">
-            <h1 className="text-[24px] font-bold text-black">
-              Voting yang sudah dibuat.
+            <h1 className="text-[24px] font-bold text-black dark:text-white">
+              Voting yang sudah dibuat.😁
             </h1>
 
             <div className="overflow-x-scroll sm:overflow-x-hidden">
-              <table className="w-[1000px] table-auto border-[2px] border-black/10 sm:w-[1280px]">
-                <thead className="border-b-[2px] border-black/10">
+              <table className="w-[1000px] table-auto border-[2px] border-black/10 dark:border-zinc-700 sm:w-[1280px]">
+                <thead className="border-b-[2px] border-black/10 dark:border-zinc-700">
                   <tr>
-                    <th className="p-5 text-left font-bold text-black">No</th>
-                    <th className="p-5 text-left font-bold text-black">
+                    <th className="p-5 text-left font-bold text-black dark:text-white">
+                      No
+                    </th>
+                    <th className="p-5 text-left font-bold text-black dark:text-white">
                       Judul
                     </th>
-                    <th className="p-5 text-left font-bold text-black">Kode</th>
-                    <th className="p-5 text-left font-bold text-black">
+                    <th className="p-5 text-left font-bold text-black dark:text-white">
+                      Kode
+                    </th>
+                    <th className="p-5 text-left font-bold text-black dark:text-white">
                       Mulai
                     </th>
-                    <th className="p-5 text-left font-bold text-black">
+                    <th className="p-5 text-left font-bold text-black dark:text-white">
                       Selesai
                     </th>
                     <th></th>
@@ -167,7 +171,7 @@ export default function Admin(props) {
                     <tr>
                       <td
                         colSpan={6}
-                        className="p-5 text-center font-semibold text-black"
+                        className="p-5 text-center font-semibold text-black dark:text-white"
                       >
                         Waduh belum ada datanya nih 😀
                       </td>
@@ -176,36 +180,36 @@ export default function Admin(props) {
                     rooms.data.map((room, index) => {
                       return (
                         <tr key={room.id}>
-                          <td className="p-5 text-left font-semibold text-black">
+                          <td className="p-5 text-left font-semibold text-black dark:text-white">
                             {index + 1}.
                           </td>
                           <td className="max-w-[420px] p-5 text-left">
                             <Link
                               href={`/rooms/${room.code}`}
-                              className="font-semibold text-black hover:underline"
+                              className="font-semibold text-black hover:underline dark:text-white"
                             >
                               {room.name}
                             </Link>
                           </td>
-                          <td className="p-5 text-left font-medium uppercase text-black">
+                          <td className="p-5 text-left font-medium uppercase text-black dark:text-white">
                             {room.code}
                           </td>
-                          <td className="p-5 text-left font-semibold text-black">
+                          <td className="p-5 text-left font-semibold text-black dark:text-white">
                             {convertTime(room.start)}
                           </td>
-                          <td className="p-5 text-left font-semibold text-black">
+                          <td className="p-5 text-left font-semibold text-black dark:text-white">
                             {convertTime(room.end)}
                           </td>
-                          <td className="p-5 text-left font-semibold text-black">
+                          <td className="p-5 text-left font-semibold text-black dark:text-white">
                             <div className="flex items-center justify-center gap-3">
                               <Link
                                 href={`/dashboard/edit/${room.id}`}
-                                className="p-1 text-[22px] text-black hover:bg-black/10"
+                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white"
                               >
                                 <HiOutlinePencilAlt />
                               </Link>
                               <button
-                                className="p-1 text-[22px] text-black hover:bg-black/10"
+                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white"
                                 onClick={() => handleDelete(room.id, room.code)}
                               >
                                 <HiOutlineTrash />

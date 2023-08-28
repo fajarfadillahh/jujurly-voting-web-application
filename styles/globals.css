@@ -10,10 +10,10 @@
 @layer components {
   /* section class */
   .section-title {
-    @apply mb-2 text-[42px] font-bold text-black;
+    @apply mb-2 text-[42px] font-bold text-black dark:text-white;
   }
   .section-text {
-    @apply text-[16px] font-medium text-black;
+    @apply text-[16px] font-medium text-black dark:text-white;
   }
 
   /* container class */
