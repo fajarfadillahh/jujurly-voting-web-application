@@ -4,6 +4,7 @@ import useSWR from "swr";
 import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
+import swrfetch from "@/utils/swrfetch";
 
 // import components
 import Layout from "@/components/Layout";
@@ -25,20 +26,11 @@ export default function Voting(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR(`/rooms/?code=${props.code}`, useSWRfetch, {
+  } = useSWR(`/rooms/?code=${props.code}`, swrfetch, {
     fallback: props.rooms,
     refreshInterval: Date.now() < props.rooms.data.end ? 10000 : false,
     revalidateOnFocus: false,
   });
-
-  async function useSWRfetch(url) {
-    try {
-      const { data } = await fetcher(url, "GET", null, token);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  }
 
   const handleSubmitVoting = async () => {
     try {

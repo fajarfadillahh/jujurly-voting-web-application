@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
 import { convertTime } from "@/utils/convert";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
+import swrfetch from "@/utils/swrfetch";
 
 // import components
 import Layout from "@/components/Layout";
@@ -24,19 +25,10 @@ export default function Admin(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR("/rooms", useSWRfetch, {
+  } = useSWR("/rooms", swrfetch, {
     revalidateOnFocus: false,
     fallback: props.rooms,
   });
-
-  async function useSWRfetch(url) {
-    try {
-      const { data } = await fetcher(url, "GET", null, token);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  }
 
   function handleDelete(room_id, code) {
     Swal.fire({
