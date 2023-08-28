@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
 import { convertTime } from "@/utils/convert";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
+import { useTheme } from "next-themes";
 import swrfetch from "@/utils/swrfetch";
 
 // import components
@@ -20,6 +21,7 @@ import Image from "next/image";
 export default function Admin(props) {
   const router = useRouter();
   const token = Cookies.get("token");
+  const { theme } = useTheme();
 
   const {
     data: rooms,
@@ -94,7 +96,7 @@ export default function Admin(props) {
             </div>
 
             <Image
-              src="/assets/img-5.svg"
+              src={`/assets/${theme == "dark" ? "img-5-dark" : "img-5"}.svg`}
               alt="hero img"
               className="w-[400px] justify-self-center"
               width={400}

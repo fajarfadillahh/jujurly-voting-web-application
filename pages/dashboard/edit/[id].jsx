@@ -1,10 +1,13 @@
 // import utility
+import Head from "next/head";
+import Image from "next/image";
+import Cookies from "js-cookie";
+import Flatpickr from "react-flatpickr";
 import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import fetcher from "@/utils/fetcher";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
+import { useTheme } from "next-themes";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -15,13 +18,14 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import CandidateForm from "@/components/Candidate/CandidateForm";
 import LoadingButton from "@/components/LoadingButton";
-import Head from "next/head";
-import Flatpickr from "react-flatpickr";
-import Image from "next/image";
+
+// import utils
+import fetcher from "@/utils/fetcher";
 
 export default function EditVoting({ rooms }) {
   const token = Cookies.get("token");
   const router = useRouter();
+  const { theme } = useTheme();
 
   const [title, setTitle] = useState(rooms.data.name);
   const [startFromInput, setStartFromInput] = useState(null);
@@ -97,7 +101,7 @@ export default function EditVoting({ rooms }) {
           <div className="container grid gap-16">
             <div className="grid gap-4">
               <Image
-                src="/assets/img-2.svg"
+                src={`/assets/${theme == "dark" ? "img-2-dark" : "img-2"}.svg`}
                 alt="img"
                 className="w-[430px]"
                 width={430}

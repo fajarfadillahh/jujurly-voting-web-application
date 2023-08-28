@@ -1,6 +1,7 @@
 // import utility
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useTheme } from "next-themes";
 
 // import components
 import Layout from "@/components/Layout";
@@ -10,6 +11,7 @@ import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   useEffect(() => {
     localStorage.setItem("votes", JSON.stringify([]));
@@ -36,7 +38,7 @@ export default function Home() {
             </div>
 
             <Image
-              src="/assets/img-1.svg"
+              src={`/assets/${theme == "dark" ? "img-1-dark" : "img-1"}.svg`}
               alt="hero img"
               className="w-[400px] justify-self-center"
               width={400}

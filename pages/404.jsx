@@ -1,14 +1,16 @@
 // import utility
+import Image from "next/image";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 
 // import components
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
-import Image from "next/image";
-import Head from "next/head";
 
 export default function NotFound() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   return (
     <>
@@ -21,7 +23,7 @@ export default function NotFound() {
         <section className="pb-16 pt-32">
           <div className="container grid justify-items-center gap-8">
             <Image
-              src="/assets/img-4.svg"
+              src={`/assets/${theme == "dark" ? "img-4-dark" : "img-4"}.svg`}
               alt="hero img"
               width={350}
               height={350}

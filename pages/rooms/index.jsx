@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { launchAlert } from "@/utils/sweetalert";
+import { useTheme } from "next-themes";
 
 // import components
 import Layout from "@/components/Layout";
@@ -14,6 +15,7 @@ import Image from "next/image";
 export default function Participant() {
   const [code, setCode] = useState("");
   const router = useRouter();
+  const { theme } = useTheme();
 
   if (router.query.code && router.query.code == 404) {
     launchAlert(
@@ -35,7 +37,7 @@ export default function Participant() {
         <section className="pb-16 pt-32">
           <div className="container grid">
             <Image
-              src="/assets/img-3.svg"
+              src={`/assets/${theme == "dark" ? "img-3-dark" : "img-3"}.svg`}
               alt="hero img"
               className="w-[400px] justify-self-center"
               width={400}

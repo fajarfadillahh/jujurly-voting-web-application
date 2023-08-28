@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import fetcher from "@/utils/fetcher";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
+import { useTheme } from "next-themes";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -22,6 +23,7 @@ import Image from "next/image";
 export default function CreateVoting() {
   const token = Cookies.get("token");
   const router = useRouter();
+  const { theme } = useTheme();
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -94,7 +96,7 @@ export default function CreateVoting() {
           <div className="container grid gap-16">
             <div className="grid gap-4">
               <Image
-                src="/assets/img-2.svg"
+                src={`/assets/${theme == "dark" ? "img-2-dark" : "img-2"}.svg`}
                 alt="img"
                 className="w-[430px]"
                 width={430}
