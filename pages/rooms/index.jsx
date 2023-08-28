@@ -1,7 +1,7 @@
 // import utility
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Swal from "sweetalert2";
+import { launchAlert } from "@/utils/sweetalert";
 
 // import components
 import Layout from "@/components/Layout";
@@ -16,11 +16,11 @@ export default function Participant() {
   const router = useRouter();
 
   if (router.query.code && router.query.code == 404) {
-    Swal.fire({
-      icon: "error",
-      title: "Ooppss...",
-      text: "Kayaknya kamu salah masukin kode voting 😱",
-    });
+    launchAlert(
+      "Ooppsss...",
+      "Kayaknya kamu salah masukin kode voting 😱",
+      "error",
+    );
     router.push("/rooms");
   }
 

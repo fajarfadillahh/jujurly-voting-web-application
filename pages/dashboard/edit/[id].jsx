@@ -3,8 +3,8 @@ import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
 import fetcher from "@/utils/fetcher";
+import { launchAlert, launchToast } from "@/utils/sweetalert";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -75,11 +75,14 @@ export default function EditVoting({ rooms }) {
       );
 
       if (data.success) {
+        launchToast("success", "Edit data nya berhasil 😄");
         return router.push("/dashboard");
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      error.response.data.errors.map((error) => {
+        launchAlert("Ups", error.message, "error");
+      });
     }
   };
 
@@ -143,11 +146,11 @@ export default function EditVoting({ rooms }) {
                       }
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return Swal.fire({
-                            title: "Ups",
-                            text: "Isi dulu waktu mulai votingnya ya 😄",
-                            icon: "warning",
-                          });
+                          return launchAlert(
+                            "Ups",
+                            "Isi dulu waktu mulai votingnya ya 😄",
+                            "warning",
+                          );
                         }
                         setStartFromInput(date[0].getTime());
                       }}
@@ -169,11 +172,11 @@ export default function EditVoting({ rooms }) {
                       value={endFromInput ? endFromInput : endFromData}
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return Swal.fire({
-                            title: "Ups",
-                            text: "Isi dulu waktu selesai votingnya ya 😄",
-                            icon: "warning",
-                          });
+                          return launchAlert(
+                            "Ups",
+                            "Isi dulu waktu selesai votingnya ya 😄",
+                            "warning",
+                          );
                         }
                         setEndFromInput(date[0].getTime());
                       }}

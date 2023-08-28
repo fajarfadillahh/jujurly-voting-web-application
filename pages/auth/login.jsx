@@ -1,8 +1,8 @@
 // import utility
 import { useState } from "react";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
 import fetcher from "@/utils/fetcher";
+import { launchAlert } from "@/utils/sweetalert";
 
 // import components
 import Layout from "@/components/Layout";
@@ -48,11 +48,7 @@ export default function Login() {
     } catch (error) {
       setIsLoading(false);
       error.response.data.errors.map((error) => {
-        Swal.fire({
-          title: "Ups",
-          text: error.message,
-          icon: "error",
-        });
+        launchAlert("Ups", error.message, "error");
       });
     }
   }

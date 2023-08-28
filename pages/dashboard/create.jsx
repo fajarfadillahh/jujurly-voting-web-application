@@ -3,8 +3,8 @@ import { useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
 import fetcher from "@/utils/fetcher";
+import { launchAlert } from "@/utils/sweetalert";
 
 // reactflatpicr css
 import "flatpickr/dist/flatpickr.css";
@@ -77,11 +77,7 @@ export default function CreateVoting() {
     } catch (error) {
       setIsLoading(false);
       error.response.data.errors.map((error) => {
-        Swal.fire({
-          title: "Ups",
-          text: error.message,
-          icon: "error",
-        });
+        launchAlert("Ups", error.message, "error");
       });
     }
   };
@@ -139,11 +135,11 @@ export default function CreateVoting() {
                       options={{ time_24hr: true, minDate: Date.now() }}
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return Swal.fire({
-                            title: "Ups",
-                            text: "Isi dulu waktu mulai votingnya ya 😄",
-                            icon: "warning",
-                          });
+                          return launchAlert(
+                            "ups",
+                            "Isi dulu waktu mulai votingnya ya 😄",
+                            "warning",
+                          );
                         }
                         setStartDate(date[0].getTime());
                       }}
@@ -162,13 +158,12 @@ export default function CreateVoting() {
                       options={{ time_24hr: true, minDate: startDate }}
                       onClose={(date) => {
                         if (date.length == 0) {
-                          return Swal.fire({
-                            title: "Ups",
-                            text: "Isi dulu waktu selesai votingnya ya 😄",
-                            icon: "warning",
-                          });
+                          return launchAlert(
+                            "ups",
+                            "Isi dulu waktu selesai votingnya ya 😄",
+                            "warning",
+                          );
                         }
-                        setEndDate(date[0].getTime());
                       }}
                       className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
                       placeholder="Pilih Waktu Selesai"

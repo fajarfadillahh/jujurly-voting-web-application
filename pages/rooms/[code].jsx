@@ -1,9 +1,9 @@
 // import utility
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
+import { launchAlert, launchToast } from "@/utils/sweetalert";
 
 // import components
 import Layout from "@/components/Layout";
@@ -69,30 +69,14 @@ export default function Voting(props) {
 
         setIsAvailable(false);
 
-        return Swal.fire({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          text: "Vote data nya berhasil 😄",
-          timer: 2000,
-          icon: "success",
-          timerProgressBar: true,
-        });
+        return launchToast("success", "Vote data nya berhasil 😄");
       }
     } catch (error) {
       if (error.response.status == 409) {
-        return Swal.fire({
-          title: "Ups",
-          text: "Kamu cuma boleh vote sekali 😄",
-          icon: "error",
-        });
+        return launchAlert("Ups", "Kamu cuma boleh vote sekali 😄", "error");
       }
 
-      Swal.fire({
-        title: "Ups",
-        text: error.message,
-        icon: "error",
-      });
+      launchAlert("Ups", error.message, "error");
     }
   };
 
