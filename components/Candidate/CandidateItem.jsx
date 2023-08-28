@@ -8,7 +8,7 @@ export default function CandidateItem({
   isAvailable,
 }) {
   return (
-    <div className="flex w-full items-center justify-between gap-12 border-[2px] border-black/10 p-8">
+    <div className="flex w-full flex-col gap-6 border-[2px] border-black/10 p-8 sm:flex-row sm:items-center sm:justify-between sm:gap-12">
       <div className="flex w-full flex-col gap-4">
         <div className="inline-flex items-start gap-4">
           <div className="flex h-8 w-8 items-center justify-center bg-black/10 text-[18px] font-bold text-black">
@@ -37,7 +37,7 @@ export default function CandidateItem({
 
       {isAvailable ? (
         <div
-          className={`group inline-flex h-16 w-16 cursor-pointer items-center justify-center text-[32px] ${
+          className={`group inline-flex h-16 w-full cursor-pointer items-center justify-center text-[32px] sm:w-16 ${
             isSelected
               ? "bg-black text-white"
               : "bg-black/10 text-black hover:bg-black/20"

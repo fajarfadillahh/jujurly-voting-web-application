@@ -147,7 +147,7 @@ export default function Voting(props) {
             </div>
 
             {/* candidate components */}
-            <div className="grid w-[850px] justify-items-center gap-6">
+            <div className="grid w-full justify-items-center gap-6 sm:max-w-[850px]">
               {rooms.data.candidates.map((candidate, index) => {
                 return (
                   <CandidateItem
