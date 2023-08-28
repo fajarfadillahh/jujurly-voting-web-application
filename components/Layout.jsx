@@ -36,7 +36,7 @@ export default function Layout({ children, className }) {
         {children}
 
         <div
-          className="fixed bottom-12 left-12 cursor-pointer rounded-full bg-white p-2 text-[1.2rem] text-black shadow-[2px_2px_10px_rgba(0,0,0,0.1)] hover:bg-black/5 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-500"
+          className="fixed bottom-12 left-12 cursor-pointer rounded-full bg-white p-2 text-[1.2rem] text-black shadow-[2px_2px_10px_rgba(0,0,0,0.1)] hover:bg-zinc-200 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-500"
           onClick={() =>
             theme == "dark" ? setTheme("light") : setTheme("dark")
           }

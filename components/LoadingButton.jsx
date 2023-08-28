@@ -1,11 +1,11 @@
 export default function LoadingButton({ className }) {
   return (
     <button
-      className={`inline-flex h-[48px] w-full cursor-not-allowed items-center justify-center border bg-black/10 px-10 ${className}`}
+      className={`inline-flex h-[48px] w-full cursor-not-allowed items-center justify-center bg-black/10 px-10 ${className} dark:bg-zinc-700`}
     >
       <svg
         aria-hidden="true"
-        className="mr-2 inline h-8 w-8 animate-spin fill-gray-600 text-gray-200 dark:fill-gray-300 dark:text-gray-600"
+        className="mr-2 inline h-8 w-8 animate-spin fill-gray-600 text-gray-300 dark:fill-zinc-800 dark:text-zinc-500"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

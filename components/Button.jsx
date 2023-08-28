@@ -4,10 +4,10 @@ export default function Button({ text, className, variant, type, onClick }) {
 
   if (variant === "fill") {
     baseStyle +=
-      " bg-black text-white hover:bg-black/10 hover:text-black dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-white";
+      " bg-black text-white hover:bg-black/10 hover:text-black dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-500";
   } else if (variant === "stroke") {
     baseStyle +=
-      " bg-transparent border-[2px] border-black text-black hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-zinc-900";
+      " bg-transparent border-[2px] border-black text-black hover:bg-black hover:text-white dark:border-zinc-700 dark:text-white dark:hover:bg-zinc-700";
   }
 
   return (

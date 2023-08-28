@@ -185,12 +185,12 @@ export default function Admin(props) {
                             <div className="flex items-center justify-center gap-3">
                               <Link
                                 href={`/dashboard/edit/${room.id}`}
-                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white"
+                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white dark:hover:bg-zinc-500"
                               >
                                 <HiOutlinePencilAlt />
                               </Link>
                               <button
-                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white"
+                                className="p-1 text-[22px] text-black hover:bg-black/10 dark:text-white dark:hover:bg-zinc-500"
                                 onClick={() => handleDelete(room.id, room.code)}
                               >
                                 <HiOutlineTrash />

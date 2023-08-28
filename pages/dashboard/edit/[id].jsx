@@ -113,13 +113,15 @@ export default function EditVoting({ rooms }) {
             </div>
 
             <div className="grid gap-6">
-              <h1 className="text-[24px] font-bold text-black">
+              <h1 className="text-[24px] font-bold text-black dark:text-white">
                 Detail Voting
               </h1>
 
               <div className="grid max-w-[600px] gap-4">
                 <div className="grid gap-2">
-                  <label className="font-semibold text-black">Judul</label>
+                  <label className="font-semibold text-black dark:text-white">
+                    Judul
+                  </label>
                   <Form
                     type="text"
                     placeholder="Contoh: Pemilihan Ketua Osis"
@@ -131,7 +133,7 @@ export default function EditVoting({ rooms }) {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
                   <div className="grid gap-2">
-                    <label className="font-semibold text-black">
+                    <label className="font-semibold text-black dark:text-white">
                       Waktu Mulai
                     </label>
 
@@ -154,15 +156,15 @@ export default function EditVoting({ rooms }) {
                         }
                         setStartFromInput(date[0].getTime());
                       }}
-                      className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
+                      className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
                       placeholder="Pilih Waktu Mulai"
                     />
                   </div>
-                  <span className="font-semibold text-black sm:pt-[24px]">
+                  <span className="font-semibold text-black dark:text-white sm:pt-[24px]">
                     s/d
                   </span>
                   <div className="grid gap-2">
-                    <label className="font-semibold text-black">
+                    <label className="font-semibold text-black dark:text-white">
                       Waktu Selesai
                     </label>
 
@@ -180,7 +182,7 @@ export default function EditVoting({ rooms }) {
                         }
                         setEndFromInput(date[0].getTime());
                       }}
-                      className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60"
+                      className="flex h-[48px] bg-black/10 px-8 text-[14px] font-bold text-black placeholder:font-sans placeholder:text-[14px] placeholder:font-semibold placeholder:text-black/60 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
                       placeholder="Pilih Waktu Selesai"
                     />
                   </div>
@@ -189,7 +191,9 @@ export default function EditVoting({ rooms }) {
             </div>
 
             <div className="grid gap-6">
-              <h1 className="text-[24px] font-bold text-black">Kandidat</h1>
+              <h1 className="text-[24px] font-bold text-black dark:text-white">
+                Kandidat
+              </h1>
 
               <div className="flex flex-wrap gap-5">
                 {candidates.map((candidate, index) => (
@@ -203,7 +207,7 @@ export default function EditVoting({ rooms }) {
                 ))}
 
                 <div
-                  className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20"
+                  className="flex aspect-square h-[64px] w-[64px] cursor-pointer items-center justify-center bg-black/10 text-[2rem] text-black/40 hover:bg-black/20 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-500"
                   onClick={() => addCandidateForm()}
                 >
                   <HiOutlinePlus />

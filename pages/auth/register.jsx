@@ -94,9 +94,12 @@ export default function Register() {
             )}
           </div>
 
-          <div className="justify-self-center text-[14px] font-medium text-black/60">
+          <div className="justify-self-center text-[14px] font-medium text-black/60 dark:text-white">
             Sudah punya akun? Klik{" "}
-            <Link href="/auth/login" className="font-bold text-black">
+            <Link
+              href="/auth/login"
+              className="font-bold text-black hover:underline dark:text-white"
+            >
               disini
             </Link>{" "}
             untuk masuk

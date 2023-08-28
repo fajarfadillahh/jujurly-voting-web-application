@@ -154,7 +154,7 @@ export default function Voting(props) {
               )}
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 font-semibold text-black hover:underline"
+                className="inline-flex items-center gap-2 font-semibold text-black hover:underline dark:text-white"
               >
                 Kembali
               </Link>

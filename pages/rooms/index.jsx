@@ -66,7 +66,7 @@ export default function Participant() {
                 />
                 <Link
                   href="/dashboard"
-                  className="mt-6 inline-flex justify-self-center font-semibold text-black hover:underline"
+                  className="mt-6 inline-flex justify-self-center font-semibold text-black hover:underline dark:text-white"
                 >
                   Kembali
                 </Link>
