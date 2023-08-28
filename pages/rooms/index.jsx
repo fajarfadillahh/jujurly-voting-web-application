@@ -1,6 +1,7 @@
 // import utility
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { launchAlert } from "@/utils/sweetalert";
 
 // import components
 import Layout from "@/components/Layout";
@@ -14,9 +15,15 @@ export default function Participant() {
   const [code, setCode] = useState("");
   const router = useRouter();
 
-  function handleCode(e) {
-    setCode(e.target.value);
+  if (router.query.code && router.query.code == 404) {
+    launchAlert(
+      "Ooppsss...",
+      "Kayaknya kamu salah masukin kode voting 😱",
+      "error",
+    );
+    router.push("/rooms");
   }
+
   return (
     <>
       <Head>
@@ -49,7 +56,7 @@ export default function Participant() {
                   type="text"
                   placeholder="Masukan Kode Voting"
                   className="text-center uppercase placeholder:capitalize"
-                  onChange={handleCode}
+                  onChange={(e) => setCode(e.target.value.substring(0, 8))}
                   value={code}
                 />
                 <Button

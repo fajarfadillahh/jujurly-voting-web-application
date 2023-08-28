@@ -6,6 +6,8 @@ import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
 import { convertTime } from "@/utils/convert";
+import { launchAlert, launchToast } from "@/utils/sweetalert";
+import swrfetch from "@/utils/swrfetch";
 
 // import components
 import Layout from "@/components/Layout";
@@ -23,19 +25,10 @@ export default function Admin(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR("/rooms", useSWRfetch, {
+  } = useSWR("/rooms", swrfetch, {
     revalidateOnFocus: false,
     fallback: props.rooms,
   });
-
-  async function useSWRfetch(url) {
-    try {
-      const { data } = await fetcher(url, "GET", null, token);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  }
 
   function handleDelete(room_id, code) {
     Swal.fire({
@@ -62,25 +55,13 @@ export default function Admin(props) {
           );
 
           if (data.success) {
-            Swal.fire({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              text: "Hapus data nya berhasil 😄",
-              timer: 1500,
-              icon: "success",
-              timerProgressBar: true,
-            });
+            launchToast("success", "Hapus data nya berhasil 😄");
 
             // do refetch
             mutate();
           }
         } catch (error) {
-          Swal.fire({
-            title: "Ups",
-            text: error.message,
-            icon: "error",
-          });
+          launchAlert("Ups", error.message, "error");
         }
       }
     });

@@ -1,9 +1,10 @@
 // import utility
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
+import { launchAlert, launchToast } from "@/utils/sweetalert";
+import swrfetch from "@/utils/swrfetch";
 
 // import components
 import Layout from "@/components/Layout";
@@ -25,20 +26,11 @@ export default function Voting(props) {
     data: rooms,
     mutate,
     isLoading,
-  } = useSWR(`/rooms/?code=${props.code}`, useSWRfetch, {
+  } = useSWR(`/rooms/?code=${props.code}`, swrfetch, {
     fallback: props.rooms,
     refreshInterval: Date.now() < props.rooms.data.end ? 10000 : false,
     revalidateOnFocus: false,
   });
-
-  async function useSWRfetch(url) {
-    try {
-      const { data } = await fetcher(url, "GET", null, token);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  }
 
   const handleSubmitVoting = async () => {
     try {
@@ -69,36 +61,16 @@ export default function Voting(props) {
 
         setIsAvailable(false);
 
-        return Swal.fire({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          text: "Vote data nya berhasil 😄",
-          timer: 2000,
-          icon: "success",
-          timerProgressBar: true,
-        });
+        return launchToast("success", "Vote data nya berhasil 😄");
       }
     } catch (error) {
       if (error.response.status == 409) {
-        return Swal.fire({
-          title: "Ups",
-          text: error.response.data.errors[0].message,
-          icon: "error",
-        });
+        return launchAlert("Ups", "Kamu cuma boleh vote sekali 😄", "error");
       }
 
-      Swal.fire({
-        title: "Ups",
-        text: error.message,
-        icon: "error",
-      });
+      launchAlert("Ups", error.message, "error");
     }
   };
-
-  function handleComplete() {
-    setIsAvailable(false);
-  }
 
   useEffect(() => {
     setIsClient(true);
@@ -143,7 +115,10 @@ export default function Voting(props) {
               </h1>
 
               {/* countdown components */}
-              <CountDown end={rooms.data.end} handleComplete={handleComplete} />
+              <CountDown
+                end={rooms.data.end}
+                handleComplete={() => setIsAvailable(false)}
+              />
             </div>
 
             {/* candidate components */}
@@ -220,7 +195,7 @@ export async function getServerSideProps({ params, req }) {
     if (error.response.status == 404) {
       return {
         redirect: {
-          destination: "/404",
+          destination: "/rooms?code=404",
         },
       };
     }
