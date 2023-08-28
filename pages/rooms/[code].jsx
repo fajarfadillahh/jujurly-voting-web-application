@@ -83,7 +83,7 @@ export default function Voting(props) {
       if (error.response.status == 409) {
         return Swal.fire({
           title: "Ups",
-          text: error.response.data.errors[0].message,
+          text: "Kamu cuma boleh vote sekali 😄",
           icon: "error",
         });
       }
@@ -220,7 +220,7 @@ export async function getServerSideProps({ params, req }) {
     if (error.response.status == 404) {
       return {
         redirect: {
-          destination: "/404",
+          destination: "/rooms?code=404",
         },
       };
     }
