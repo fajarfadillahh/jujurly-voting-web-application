@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function fetcher(url, method, data = null, token = null) {
   const defaultObject = {
-    url: `http://103.150.191.205/api/v1${url}`,
+    url: `https://jujurly.cyclic.app/api/v1${url}`,
     method,
   };
 
