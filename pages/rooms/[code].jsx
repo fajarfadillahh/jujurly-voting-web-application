@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import CountDown from "@/components/CountDown/CountDown";
 import CandidateItem from "@/components/Candidate/CandidateItem";
 import LoadingScreen from "@/components/LoadingScreen";
+import LoadingButton from "@/components/LoadingButton";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -19,6 +20,7 @@ export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isAvailable, setIsAvailable] = useState(true);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const token = Cookies.get("token");
 
@@ -34,6 +36,7 @@ export default function Voting(props) {
 
   const handleSubmitVoting = async () => {
     try {
+      setLoadingButton(true);
       const { data } = await fetcher(
         "/rooms/votes",
         "POST",
@@ -64,6 +67,7 @@ export default function Voting(props) {
         return launchToast("success", "Vote data nya berhasil 😄");
       }
     } catch (error) {
+      setLoadingButton(false);
       if (error.response.status == 409) {
         return launchAlert("Ups", "Kamu cuma boleh vote sekali 😄", "error");
       }
@@ -141,15 +145,19 @@ export default function Voting(props) {
 
             <div className="grid justify-items-center gap-4">
               {isAvailable ? (
-                <Button
-                  text="Kirim Voting 🚀"
-                  variant="fill"
-                  className="mt-8"
-                  onClick={handleSubmitVoting}
-                />
+                loadingButton ? (
+                  <LoadingButton className="mt-8 w-[200px]" />
+                ) : (
+                  <Button
+                    text="Kirim Voting 🚀"
+                    variant="fill"
+                    className="mt-8"
+                    onClick={handleSubmitVoting}
+                  />
+                )
               ) : (
-                <span className="text-[20px] font-medium text-red-500">
-                  Kesempatan buat vote cuma 1 kali yaaa 😁
+                <span className="rounded-full bg-red-100 px-4 py-1 font-semibold text-red-600">
+                  Note: Kesempatan buat vote cuma 1 kali yaaa 😁
                 </span>
               )}
               <Link

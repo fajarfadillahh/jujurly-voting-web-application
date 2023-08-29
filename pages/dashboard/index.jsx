@@ -135,7 +135,7 @@ export default function Admin(props) {
                       No
                     </th>
                     <th className="p-5 text-left font-bold text-black dark:text-white">
-                      Judul
+                      Judul Voting
                     </th>
                     <th className="p-5 text-left font-bold text-black dark:text-white">
                       Kode
