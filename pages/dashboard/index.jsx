@@ -2,6 +2,7 @@
 import useSWR from "swr";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import Cookies from "js-cookie";
 import fetcher from "@/utils/fetcher";
@@ -17,8 +18,11 @@ import LoadingScreen from "@/components/LoadingScreen";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import Form from "@/components/Form";
 
 export default function Admin(props) {
+  const [search, setSearch] = useState("");
+
   const router = useRouter();
   const token = Cookies.get("token");
   const { theme } = useTheme();
@@ -68,6 +72,24 @@ export default function Admin(props) {
       }
     });
   }
+
+  const mappingVoting = props.rooms.data.map((item) => {
+    return {
+      ...item,
+      name: item.name
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f\']/g, "")
+        .trim()
+        .normalize("NFC")
+        .replace(/[^\x00-\x7F]/g, "")
+        .replace(/-/g, " ")
+        .trim(),
+    };
+  });
+
+  const filterVoting = mappingVoting.filter((item) =>
+    item.name.toLowerCase().includes(search),
+  );
 
   if (isLoading) {
     return <LoadingScreen isLoading={isLoading} />;
@@ -122,10 +144,19 @@ export default function Admin(props) {
 
         {/* ===== table section ===== */}
         <section className="py-16">
-          <div className="container grid gap-6">
-            <h1 className="text-[24px] font-bold text-black dark:text-white">
-              Voting yang sudah dibuat.😁
-            </h1>
+          <div className="container grid gap-8">
+            <div className="flex flex-col gap-4">
+              <h1 className="text-[24px] font-bold text-black dark:text-white">
+                Voting yang sudah dibuat.😁
+              </h1>
+
+              <Form
+                type="text"
+                placeholder="Cari voting yang sudah dibuat.."
+                className="max-w-[350px] px-5"
+                onChange={(e) => setSearch(e.target.value.toLowerCase())}
+              />
+            </div>
 
             <div className="overflow-x-scroll sm:overflow-x-hidden">
               <table className="w-[1000px] table-auto border-[2px] border-black/10 dark:border-zinc-700 sm:w-[1280px]">
@@ -150,7 +181,7 @@ export default function Admin(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {rooms.data.length == 0 ? (
+                  {filterVoting.length == 0 ? (
                     <tr>
                       <td
                         colSpan={6}
@@ -160,7 +191,7 @@ export default function Admin(props) {
                       </td>
                     </tr>
                   ) : (
-                    rooms.data.map((room, index) => {
+                    filterVoting.map((room, index) => {
                       return (
                         <tr key={room.id}>
                           <td className="p-5 text-left font-semibold text-black dark:text-white">
