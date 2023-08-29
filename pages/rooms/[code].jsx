@@ -20,11 +20,7 @@ export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isAvailable, setIsAvailable] = useState(true);
-<<<<<<< HEAD
-  const [loadingButton, setLoadingButton] = useState(false);
-=======
   const [loading, setLoading] = useState(false);
->>>>>>> 5afc5cdb47e40c85405ab969f1fb71bde15940e0
 
   const token = Cookies.get("token");
 
@@ -41,7 +37,6 @@ export default function Voting(props) {
   const handleSubmitVoting = async () => {
     setLoading(true);
     try {
-      setLoadingButton(true);
       const { data } = await fetcher(
         "/rooms/votes",
         "POST",
@@ -72,11 +67,7 @@ export default function Voting(props) {
         return launchToast("success", "Vote data nya berhasil 😄");
       }
     } catch (error) {
-<<<<<<< HEAD
-      setLoadingButton(false);
-=======
       setLoading(false);
->>>>>>> 5afc5cdb47e40c85405ab969f1fb71bde15940e0
       if (error.response.status == 409) {
         return launchAlert("Ups", "Kamu cuma boleh vote sekali 😄", "error");
       }
@@ -154,16 +145,12 @@ export default function Voting(props) {
 
             <div className="grid justify-items-center gap-4">
               {isAvailable ? (
-                loadingButton ? (
-                  <LoadingButton className="mt-8 w-[200px]" />
-                ) : (
-                  <Button
-                    text="Kirim Voting 🚀"
-                    variant="fill"
-                    className="mt-8"
-                    onClick={handleSubmitVoting}
-                  />
-                )
+                <Button
+                  text="Kirim Voting 🚀"
+                  variant="fill"
+                  className="mt-8"
+                  onClick={handleSubmitVoting}
+                />
               ) : (
                 <span className="rounded-full bg-red-100 px-4 py-1 font-semibold text-red-600">
                   Note: Kesempatan buat vote cuma 1 kali yaaa 😁

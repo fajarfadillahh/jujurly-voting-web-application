@@ -10,7 +10,6 @@ import { convertTime } from "@/utils/convert";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
 import { useTheme } from "next-themes";
 import swrfetch from "@/utils/swrfetch";
-import { useState } from "react";
 
 // import components
 import Layout from "@/components/Layout";
