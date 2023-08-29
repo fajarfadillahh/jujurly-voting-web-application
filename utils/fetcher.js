@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function fetcher(url, method, data = null, token = null) {
   const defaultObject = {
-    url: `http://103.150.191.205/api/v1${url}`,
+    url: `https://wildanlab.tech/api/v1${url}`,
     method,
   };
 
@@ -19,6 +19,8 @@ async function fetcher(url, method, data = null, token = null) {
       },
     });
   }
+
+  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
   return axios(config);
 }
