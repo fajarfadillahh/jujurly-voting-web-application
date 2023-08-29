@@ -10,6 +10,7 @@ import { convertTime } from "@/utils/convert";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
 import { useTheme } from "next-themes";
 import swrfetch from "@/utils/swrfetch";
+import { useState } from "react";
 
 // import components
 import Layout from "@/components/Layout";
@@ -26,6 +27,7 @@ export default function Admin(props) {
   const router = useRouter();
   const token = Cookies.get("token");
   const { theme } = useTheme();
+  const [loading, setLoading] = useState(false);
 
   const {
     data: rooms,
@@ -49,6 +51,7 @@ export default function Admin(props) {
       confirmButtonColor: "#3085d6",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        setLoading(true);
         try {
           const { data } = await fetcher(
             "/rooms",
@@ -61,12 +64,12 @@ export default function Admin(props) {
           );
 
           if (data.success) {
-            launchToast("success", "Hapus data nya berhasil 😄");
-
-            // do refetch
             mutate();
+            setLoading(false);
+            launchToast("success", "Hapus data nya berhasil 😄");
           }
         } catch (error) {
+          setLoading(false);
           launchAlert("Ups", error.message, "error");
         }
       }
@@ -91,8 +94,8 @@ export default function Admin(props) {
     item.name.toLowerCase().includes(search),
   );
 
-  if (isLoading) {
-    return <LoadingScreen isLoading={isLoading} />;
+  if (isLoading || loading) {
+    return <LoadingScreen isLoading={isLoading || loading} />;
   }
 
   return (

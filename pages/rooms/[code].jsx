@@ -20,7 +20,11 @@ export default function Voting(props) {
   const [isClient, setIsClient] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isAvailable, setIsAvailable] = useState(true);
+<<<<<<< HEAD
   const [loadingButton, setLoadingButton] = useState(false);
+=======
+  const [loading, setLoading] = useState(false);
+>>>>>>> 5afc5cdb47e40c85405ab969f1fb71bde15940e0
 
   const token = Cookies.get("token");
 
@@ -35,6 +39,7 @@ export default function Voting(props) {
   });
 
   const handleSubmitVoting = async () => {
+    setLoading(true);
     try {
       setLoadingButton(true);
       const { data } = await fetcher(
@@ -51,8 +56,8 @@ export default function Voting(props) {
       );
 
       if (data.success) {
-        // do refetch
         mutate();
+        setLoading(false);
 
         const votes = JSON.parse(localStorage.getItem("votes"));
 
@@ -67,7 +72,11 @@ export default function Voting(props) {
         return launchToast("success", "Vote data nya berhasil 😄");
       }
     } catch (error) {
+<<<<<<< HEAD
       setLoadingButton(false);
+=======
+      setLoading(false);
+>>>>>>> 5afc5cdb47e40c85405ab969f1fb71bde15940e0
       if (error.response.status == 409) {
         return launchAlert("Ups", "Kamu cuma boleh vote sekali 😄", "error");
       }
@@ -99,8 +108,8 @@ export default function Voting(props) {
     return;
   }
 
-  if (isLoading) {
-    return <LoadingScreen isLoading={isLoading} />;
+  if (isLoading || loading) {
+    return <LoadingScreen isLoading={isLoading || loading} />;
   }
 
   return (
