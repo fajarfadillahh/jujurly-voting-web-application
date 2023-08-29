@@ -1,14 +1,15 @@
 // import utility
 import useSWR from "swr";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
-import Cookies from "js-cookie";
-import fetcher from "@/utils/fetcher";
 import { convertTime } from "@/utils/convert";
 import { launchAlert, launchToast } from "@/utils/sweetalert";
 import { useTheme } from "next-themes";
+
+import fetcher from "@/utils/fetcher";
 import swrfetch from "@/utils/swrfetch";
 
 // import components
@@ -21,12 +22,11 @@ import Image from "next/image";
 import Form from "@/components/Form";
 
 export default function Admin(props) {
-  const [search, setSearch] = useState("");
-
   const router = useRouter();
   const token = Cookies.get("token");
   const { theme } = useTheme();
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const {
     data: rooms,
@@ -75,22 +75,8 @@ export default function Admin(props) {
     });
   }
 
-  const mappingVoting = props.rooms.data.map((item) => {
-    return {
-      ...item,
-      name: item.name
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f\']/g, "")
-        .trim()
-        .normalize("NFC")
-        .replace(/[^\x00-\x7F]/g, "")
-        .replace(/-/g, " ")
-        .trim(),
-    };
-  });
-
-  const filterVoting = mappingVoting.filter((item) =>
-    item.name.toLowerCase().includes(search),
+  const filteredRooms = props.rooms.data.filter((room) =>
+    room.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   if (isLoading || loading) {
@@ -156,7 +142,8 @@ export default function Admin(props) {
                 type="text"
                 placeholder="Cari voting yang sudah dibuat.."
                 className="max-w-[350px] px-5"
-                onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
 
@@ -183,7 +170,7 @@ export default function Admin(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {filterVoting.length == 0 ? (
+                  {rooms.data.length == 0 ? (
                     <tr>
                       <td
                         colSpan={6}
@@ -193,7 +180,7 @@ export default function Admin(props) {
                       </td>
                     </tr>
                   ) : (
-                    filterVoting.map((room, index) => {
+                    filteredRooms?.map((room, index) => {
                       return (
                         <tr key={room.id}>
                           <td className="p-5 text-left font-semibold text-black dark:text-white">
