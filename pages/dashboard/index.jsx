@@ -75,13 +75,13 @@ export default function Admin(props) {
     });
   }
 
-  const filteredRooms = props.rooms.data.filter((room) =>
-    room.name.toLowerCase().includes(search.toLowerCase()),
-  );
-
   if (isLoading || loading) {
     return <LoadingScreen isLoading={isLoading || loading} />;
   }
+
+  const filteredRooms = rooms.data.filter((room) =>
+    room.name.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <>
