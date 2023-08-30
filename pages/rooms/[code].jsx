@@ -35,6 +35,10 @@ export default function Voting(props) {
   });
 
   const handleSubmitVoting = async () => {
+    if (!selectedCandidate) {
+      return launchAlert("Ooppss..", "Pilih kandidat nya dulu yaa 😄", "error");
+    }
+
     setLoading(true);
     try {
       const { data } = await fetcher(
